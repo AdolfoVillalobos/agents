@@ -1,32 +1,41 @@
 ---
 name: diff-minimality
-description: Simplify an implementation against its accepted plan. Apply before writing code and always before creating a draft PR or publishing further code changes to it.
+description: Simplify an implementation or proposed diff while preserving its required behavior. Use before implementation to choose a smaller solution, when asked to simplify code, or before publishing code changes to a PR. Remove unnecessary structure and reuse existing code without weakening correctness or tests.
 ---
 
-## Diff minimality (non-negotiable)
-- Prefer delete over abstract. Prefer one function over a new package.
-- Do not add files, types, interfaces, factories, or “future-proof” layers that the task does not require.
-- If an existing helper/module already does it, reuse it. Search first.
-- Maximum blast radius: only files required by the accepted plan.
-- After implementation, run a simplification pass: "what can we delete and still pass tests?"
-- Never expand scope to "while we're here".
+# Simplify the required change
 
-## YAGNI ladder (answer before writing code)
-1. Does this need to exist at all?
-2. Does it already exist in this repo?
-3. Can the stdlib / existing dependency do it?
-4. Can it be a 10-line change in an existing function?
-5. Only then write new code. Smallest implementation that passes the verification.
+Optimize for less conceptual complexity and a reviewable diff. Fewer lines alone do not justify losing clarity, domain distinctions, or guarantees.
 
-## Payments / correctness
-- No new abstraction around money, idempotency, auth, or ledger without an explicit human "yes" in the plan. Existing approval in the conversation counts.
-- Fail closed. Do not swallow errors. Do not "fix" tests by rewriting assertions to match new behavior unless the plan says the behavior changed.
-- Preserve observable distinctions such as no deduction (`nil`) versus a free deduction (`0`), atomicity, idempotency, alerts and invoice periods.
+## 1. Pin the contract and scope
 
-## Before publishing
-1. Identify the accepted plan and the PR's actual base. For a stacked PR, review against its parent branch, not the whole stack against main.
-2. Read `git diff BASE...HEAD` and the changed files. Identify deletions, existing helpers and redundant test setup; retain tests that protect distinct behavior. Do not invent an abstraction to reduce line count.
-3. Apply necessary simplifications and run the relevant checks. Commit the final changes. In repositories with `.agents/hooks/diff-minimality.py` installed, record the review with `python3 .agents/hooks/diff-minimality.py --record BASE --summary "What was removed or why it is necessary; checks run"`. Record only after completing the review, never just to bypass the hook.
-4. Create the PR with `gh pr create --draft --base BASE` from its branch's working directory. Use the same base ref in both commands. Repeat the review if the head or base changes.
+Identify the accepted request or plan and observable behavior that must remain. Read repository instructions and inspect local changes before editing. For a PR, use its actual base; a stacked PR uses its parent branch. Include staged, unstaged, and relevant untracked changes when simplifying work in progress.
 
-Where installed, the command hook checks the review record before `gh pr create`; it does not perform the semantic review or prove code correctness. The agent performs this skill. The same review applies when another tool publishes a PR or when an existing PR is updated.
+If the requested contract is ambiguous, use existing behavior and tests as the preservation baseline; ask only when a simplification would require choosing new behavior.
+
+## 2. Search before adding structure
+
+Before implementation, or for each candidate simplification, answer in order:
+
+1. Does this code need to exist to meet the contract?
+2. Does an existing module, helper, standard library, or dependency already do it?
+3. Can the change stay in an existing function without hiding responsibilities?
+4. Does a new abstraction reduce concepts the caller needs to understand, or just move lines?
+
+Prefer deleting unused structure and speculative configuration. Inline wrappers that add no meaningful boundary. Reuse existing helpers only when their semantics match. Similar syntax alone does not establish shared domain meaning.
+
+## 3. Simplify within the contract
+
+Apply justified changes inside the requested scope. Preserve public behavior, error semantics, authorization, atomicity, idempotency, observability, and distinctions such as absent versus zero when they matter. Retain tests that protect distinct behavior; reduce duplicated setup only when intent stays clear.
+
+For money, authentication, ledgers, or other correctness-sensitive code, trace the protected invariant before removing a branch or abstraction. A simplification request does not authorize changing that invariant. Existing approval for an intentional behavior change counts.
+
+When invoked to assess a proposal, return the simpler approach without editing source. When invoked to simplify an implementation, make the changes. Do not expand into unrelated cleanup.
+
+## 4. Verify and hand back
+
+Run checks appropriate to the affected behavior and required repository checks. Report what actually ran, its result, and any limitation. Read the final diff for unrelated edits and accidental loss of behavior.
+
+Return what was removed or simplified, why behavior is preserved, and what remains necessary. If no useful simplification exists, explain that briefly; do not manufacture a change to satisfy the skill.
+
+When this is part of preparing a PR, return control to that workflow after verification. Commit or publish only as authorized by the surrounding task. Any repository-installed hook remains a local integration: follow its documented procedure where applicable, without making this skill depend on one hook or provider.
