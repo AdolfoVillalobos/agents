@@ -42,7 +42,7 @@ Corre `make install` (o `./install.sh`) desde el checkout principal (`~/conducto
 | --- | --- | --- |
 | Skills | Un symlink por skill en `~/.claude/skills/<nombre>`; Claude Code no busca en subcarpetas | `~/.agents/skills` enlaza a `skills/` |
 | `i-have-adhd` siempre activo | Hook `SessionStart` en `~/.claude/settings.json` que ejecuta `hooks/i-have-adhd-always-on.sh` | Bloque entre marcadores `i-have-adhd` en `~/.codex/AGENTS.md` |
-| RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` agrega su hook `PreToolUse` | `rtk init -g --codex --auto-patch` |
+| RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` agrega su hook `PreToolUse` | `rtk init -g --codex` agrega su hook `PreToolUse` en `~/.codex/hooks.json` |
 
 `--no-adhd-always-on` (`make adhd-on-demand`) retira el hook y el bloque de Codex; la skill sigue disponible con `/i-have-adhd`. En una sesión, "stop adhd mode" lo apaga. `--skip-rtk` (`make install-no-rtk`) omite RTK. El script no toca carpetas reales con el mismo nombre que una skill; avisa y las omite.
 

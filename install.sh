@@ -104,7 +104,7 @@ if [ "$rtk" = 1 ]; then
     brew install rtk
   fi
   rtk init -g --auto-patch
-  rtk init -g --codex --auto-patch
+  rtk init -g --codex  # rtk no acepta --auto-patch con --codex
 fi
 
 echo "Listo. Reinicia Claude Code y Codex para cargar los cambios."
