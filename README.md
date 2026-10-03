@@ -22,6 +22,7 @@ skills/<nombre>/
   agents/openai.yaml    # metadatos opcionales de Codex, si existen
 hooks/                  # hooks que install.sh registra
 install.sh              # instalación para Claude Code y Codex
+Makefile                # atajos para install.sh
 docs/
   catalog.md            # mapa por uso, procedencia y estado
   workflow.md           # iteración en Conductor
@@ -41,7 +42,7 @@ Las categorías viven en el catálogo: mantener un nivel de carpetas evita cambi
 ## Instalar
 
 ```bash
-./install.sh
+make install   # make sin argumentos lista las variantes
 ```
 
 Enlaza las skills para Claude Code y Codex, deja `i-have-adhd` siempre activo e instala [RTK](https://github.com/rtk-ai/rtk) con sus hooks. Opciones y detalles en [portabilidad](docs/portability.md#instalación). Los hooks propios viven en `hooks/`; el resto de la ejecución automática pertenece a la integración de cada herramienta.

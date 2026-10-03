@@ -36,7 +36,7 @@ Fuentes: [Codex](https://learn.chatgpt.com/es-419/docs/build-skills), [Claude Co
 
 ### Instalación
 
-Corre `./install.sh` desde el checkout principal (`~/conductor/repos/agents` en esta máquina). Es idempotente: repítelo al agregar o quitar una skill, o si mueves el repo. Se niega a correr desde un worktree de Conductor, porque los enlaces quedarían apuntando a una copia temporal.
+Corre `make install` (o `./install.sh`) desde el checkout principal (`~/conductor/repos/agents` en esta máquina). Es idempotente: repítelo al agregar o quitar una skill, o si mueves el repo. Se niega a correr desde un worktree de Conductor, porque los enlaces quedarían apuntando a una copia temporal.
 
 | Qué | Claude Code | Codex |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Corre `./install.sh` desde el checkout principal (`~/conductor/repos/agents` en 
 | `i-have-adhd` siempre activo | Hook `SessionStart` en `~/.claude/settings.json` que ejecuta `hooks/i-have-adhd-always-on.sh` | Bloque entre marcadores `i-have-adhd` en `~/.codex/AGENTS.md` |
 | RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` agrega su hook `PreToolUse` | `rtk init -g --codex --auto-patch` |
 
-`--no-adhd-always-on` retira el hook y el bloque de Codex; la skill sigue disponible con `/i-have-adhd`. En una sesión, "stop adhd mode" lo apaga. `--skip-rtk` omite RTK. El script no toca carpetas reales con el mismo nombre que una skill; avisa y las omite.
+`--no-adhd-always-on` (`make adhd-on-demand`) retira el hook y el bloque de Codex; la skill sigue disponible con `/i-have-adhd`. En una sesión, "stop adhd mode" lo apaga. `--skip-rtk` (`make install-no-rtk`) omite RTK. El script no toca carpetas reales con el mismo nombre que una skill; avisa y las omite.
 
 Incorporar un cambio a `main` en el checkout principal actualiza ambas instalaciones, porque leen el repo mediante enlaces. La `code-review` personal reemplaza el comando integrado `/code-review` de Claude Code; el alias `/review` sigue ejecutando el integrado.
 
