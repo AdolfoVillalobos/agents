@@ -34,7 +34,15 @@ Lee AGENTS.md. Compara el comportamiento anterior y propuesto sobre <caso>.
 
 Fuentes: [Codex](https://learn.chatgpt.com/es-419/docs/build-skills), [Claude Code](https://code.claude.com/docs/en/skills). Rutas verificadas el 2026-09-14.
 
-En esta máquina el repo ya ocupa `~/.agents`, que coincide con la ubicación personal de Codex. `~/.claude/skills` actualmente enlaza a `~/Documents/fintoc/claude-config/skills`; no apunta a esta colección. Para usar una de estas versiones en Claude ahora, dale la ruta explícita. Una instalación posterior puede enlazar cada carpeta seleccionada, revisando colisiones antes de reemplazar nada.
+En esta máquina el repo ya ocupa `~/.agents`, que coincide con la ubicación personal de Codex. Desde el 2026-09-21, Claude comparte toda la carpeta mediante un único enlace simbólico:
+
+```text
+~/.claude/skills -> ~/.agents/skills
+```
+
+Ambos agentes leen los mismos archivos de la instalación principal. Las nuevas skills que se agreguen a esa carpeta quedan disponibles en ambas rutas sin crear enlaces individuales. Se verificó que las 32 skills fueran accesibles desde ambas rutas; no se ejecutó una sesión de Claude para comprobar la carga.
+
+La carpeta anterior, `~/Documents/fintoc/claude-config/skills`, conserva intactas `plan-project` y `review-pr`. Esas dos skills ya no quedan expuestas mediante `~/.claude/skills`; los enlaces individuales creados durante la configuración anterior fueron retirados.
 
 En Conductor, el directorio de trabajo es otra copia de Git. Invoca la ruta de ese workspace para probar un draft: una skill descubierta globalmente puede seguir leyendo la versión del checkout principal.
 
