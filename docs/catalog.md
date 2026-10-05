@@ -6,9 +6,9 @@
 | --- | --- | --- |
 | [code-review](../skills/code-review/SKILL.md) | Buscar fallas y contrastar cada hallazgo con evidencia | Draft propio; adaptado del review por standards/spec de `mattpocock/skills` |
 | [diff-minimality](../skills/diff-minimality/SKILL.md) | Simplificar preservando comportamiento | Draft local existente, separado del flujo de publicación |
-| [create-pr](../skills/create-pr/SKILL.md) | Crear o mejorar un PR que se entienda sin el chat | Draft nuevo |
+| [create-pr](../skills/create-pr/SKILL.md) | Crear un PR draft autoasignado, con descripción breve en español y aprobación del texto | Draft basado en la versión Fintoc aportada por el usuario y el estudio de 50 PRs de `npcastro`; referencias y casos de evaluación adjuntos |
 
-Estas tres usan instrucciones independientes del proveedor y recursos opcionales. Su estructura fue revisada; su comportamiento todavía debe compararse en tareas reales con cada agente.
+Estas tres usan instrucciones independientes del proveedor. `create-pr` incluye una referencia de Fintoc con convenciones y ejemplos de redacción. Su estructura fue revisada; su comportamiento todavía debe compararse en tareas reales con cada agente.
 
 El draft `review-pr` de `~/Documents/fintoc/claude-config/skills/review-pr` aportó contexto para la revisión: intención antes del código, lectura fuera del diff y comentarios respetuosos. Sigue en su instalación original; la versión mantenida aquí se llama `code-review`.
 
