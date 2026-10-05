@@ -15,6 +15,8 @@ If the requested contract is ambiguous, use existing behavior and tests as the p
 
 ## 2. Search before adding structure
 
+Inspect comparable implementation and test files in the repository before choosing a pattern. Follow their directory structure, naming, factories, helpers, mocking conventions, and test level, subject to documented repository rules. Introduce a different pattern only when the existing one cannot meet the current need; explain that limitation.
+
 Before implementation, or for each candidate simplification, answer in order:
 
 1. Does this code need to exist to meet the contract?
@@ -26,7 +28,13 @@ Prefer deleting unused structure and speculative configuration. Inline wrappers 
 
 ## 3. Simplify within the contract
 
-Apply justified changes inside the requested scope. Preserve public behavior, error semantics, authorization, atomicity, idempotency, observability, and distinctions such as absent versus zero when they matter. Retain tests that protect distinct behavior; reduce duplicated setup only when intent stays clear.
+Apply justified changes inside the requested scope. Preserve public behavior, error semantics, authorization, atomicity, idempotency, observability, and distinctions such as absent versus zero when they matter.
+
+Apply minimality to tests as well as implementation:
+
+1. For each new test or candidate removal, identify the distinct failure it detects. Compare with existing coverage; consolidate tests only when another retained test detects the same failure under the same conditions. Shared setup or execution of the same code does not establish redundancy: different inputs, boundaries, and integration paths may protect different behavior.
+2. Test relevant observable behavior. Avoid tests that merely mirror the implementation, assert internal details without a contract of their own, or recheck a framework guarantee. Before removing a test on those grounds, verify that it is not protecting application configuration, integration, or a known regression.
+3. Retain tests that protect distinct behavior. Reduce duplicated setup only when intent stays clear; do not introduce generic fixtures or abstractions merely to reduce line count. For a removal or consolidation, identify the retained coverage that protects the required behavior.
 
 For money, authentication, ledgers, or other correctness-sensitive code, trace the protected invariant before removing a branch or abstraction. A simplification request does not authorize changing that invariant. Existing approval for an intentional behavior change counts.
 

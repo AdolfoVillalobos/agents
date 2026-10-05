@@ -4,3 +4,5 @@ __pycache__/
 .context/
 .scratch/
 *-workspace/
+/backups/
+/skills/synced/

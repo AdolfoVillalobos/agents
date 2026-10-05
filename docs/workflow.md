@@ -8,7 +8,7 @@ El historial conserva un commit inicial de las 31 skills originales y un cambio 
 
 ## Ciclo de una skill
 
-1. Abre `~/conductor/repos/agents` con **Open project** (ya está registrado en Conductor).
+1. Abre el checkout principal con **Open project**; localízalo con `git worktree list` (`~/.agents` en esta máquina).
 2. Crea un workspace para una mejora concreta, por ejemplo: «el review confunde sugerencias con bugs».
 3. Adjunta `skills/<nombre>/SKILL.md` del workspace y un ejemplo real. Pide una modificación con un criterio observable: menos falsos positivos, hallazgos reproducibles o una descripción que explique el cambio sin contexto del chat.
 4. Ejecuta el mismo caso antes y después en sesiones separadas, indicando la ruta exacta de cada versión. Guarda prompt, revisión de Git, agente/modelo, salida y juicio humano. Los resultados temporales pueden vivir en `.scratch/`; conserva los casos reutilizables junto a la skill.
