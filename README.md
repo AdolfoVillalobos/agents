@@ -20,6 +20,9 @@ skills/<nombre>/
   references/           # material opcional, cuando haga falta
   scripts/              # automatización propia de la skill
   agents/openai.yaml    # metadatos opcionales de Codex, si existen
+hooks/                  # hooks que install.sh registra
+install.sh              # instalación para Claude Code y Codex
+Makefile                # atajos para install.sh
 docs/
   catalog.md            # mapa por uso, procedencia y estado
   workflow.md           # iteración en Conductor
@@ -36,4 +39,10 @@ Las categorías viven en el catálogo: mantener un nivel de carpetas evita cambi
 2. Edita una skill por cambio y prueba su comportamiento con una tarea representativa.
 3. Conserva una comparación antes/después; incorpora la versión elegida a la rama principal.
 
-Los hooks quedan fuera de esta primera organización. Una skill describe un procedimiento; su ejecución automática pertenece a la integración de cada herramienta.
+## Instalar
+
+```bash
+make install   # make sin argumentos lista las variantes
+```
+
+Enlaza las skills para Claude Code y Codex, deja `i-have-adhd` siempre activo e instala [RTK](https://github.com/rtk-ai/rtk) con sus hooks. Opciones y detalles en [portabilidad](docs/portability.md#instalación). Los hooks propios viven en `hooks/`; el resto de la ejecución automática pertenece a la integración de cada herramienta.

@@ -16,6 +16,14 @@ El draft `review-pr` de `~/Documents/fintoc/claude-config/skills/review-pr` apor
 
 Los grupos son navegación, no nuevos directorios ni orden obligatorio de ejecución. **Estado común: importada, pendiente de revisión de portabilidad.**
 
+### Siempre activa
+
+| Skill | Uso | Procedencia |
+| --- | --- | --- |
+| [i-have-adhd](../skills/i-have-adhd/SKILL.md) | Respuestas que empiezan por la acción, pasos numerados y sin rodeos. `install.sh` la carga en cada sesión | Copiada de [`ayghri/i-have-adhd`](https://github.com/ayghri/i-have-adhd) en `839872f`, sin cambios; licencia MIT en `LICENSE.txt` |
+
+[RTK](https://github.com/rtk-ai/rtk) acompaña a esta colección, pero no es una skill: es un binario con hooks propios que `install.sh` instala y configura.
+
 ### Diseño y definición
 
 | Skill | Uso |
@@ -77,7 +85,7 @@ Los grupos son navegación, no nuevos directorios ni orden obligatorio de ejecuc
 
 ## Procedencia
 
-La colección inicial contiene 31 skills; `create-pr` lleva el total a 32. `.skill-lock.json` conserva repositorios y hashes de la instalación original:
+La colección inicial contiene 31 skills; `create-pr` lleva el total a 32 e `i-have-adhd` a 33. `.skill-lock.json` conserva repositorios y hashes de la instalación original:
 
 - `mattpocock/skills`: colección de ingeniería, incluida la base original de `code-review`.
 - `vercel-labs/agent-skills`: composición React, guidelines de diseño y escritura.

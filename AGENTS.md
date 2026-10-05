@@ -8,6 +8,6 @@ This repository contains reusable work skills. Read `docs/catalog.md` to identif
 - Keep provider adapters optional. Keep domain-specific guidance in the target repository or a disclosed reference; avoid machine-specific paths in skill bodies.
 - Update the catalog when adding a skill or changing its ownership/status. Preserve imported attribution and bundled licenses. Imported skills have not all been audited for portability.
 - For behavior changes, record representative prompts and expected outcomes alongside the skill or in the change description. Distinguish a structural check from an actual run with a model; never claim cross-provider validation without executing it.
-- Treat `~/.agents/skills` as a live installation. In a Conductor worktree, read the skill from that worktree explicitly when evaluating it; global discovery may load another version.
+- Treat `~/.agents/skills` and `~/.claude/skills` as live installations of the main checkout; `install.sh` and `hooks/` change global agent configuration. In a Conductor worktree, read the skill from that worktree explicitly when evaluating it; global discovery may load another version.
 
 Human documentation is in Spanish. Skill instructions may remain in English. Match the user's language in results.

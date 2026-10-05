@@ -43,6 +43,22 @@ En esta máquina el repo ya ocupa `~/.agents`, que coincide con la ubicación pe
 Ambos agentes leen los mismos archivos de la instalación principal. Las nuevas skills que se agreguen a esa carpeta quedan disponibles en ambas rutas sin crear enlaces individuales. Se verificó que las 32 skills fueran accesibles desde ambas rutas; no se ejecutó una sesión de Claude para comprobar la carga.
 
 La carpeta anterior, `~/Documents/fintoc/claude-config/skills`, conserva intactas `plan-project` y `review-pr`. Esas dos skills ya no quedan expuestas mediante `~/.claude/skills`; los enlaces individuales creados durante la configuración anterior fueron retirados.
+||||||| 3f8552a
+En esta máquina el repo ya ocupa `~/.agents`, que coincide con la ubicación personal de Codex. `~/.claude/skills` actualmente enlaza a `~/Documents/fintoc/claude-config/skills`; no apunta a esta colección. Para usar una de estas versiones en Claude ahora, dale la ruta explícita. Una instalación posterior puede enlazar cada carpeta seleccionada, revisando colisiones antes de reemplazar nada.
+
+### Instalación
+
+Corre `make install` (o `./install.sh`) desde el checkout principal; localízalo con `git worktree list`. Es idempotente: repítelo al agregar o quitar una skill, o si mueves el repo. Se niega a correr desde un worktree de Conductor, porque los enlaces quedarían apuntando a una copia temporal.
+
+| Qué | Claude Code | Codex |
+| --- | --- | --- |
+| Skills | Un symlink por skill en `~/.claude/skills/<nombre>`; Claude Code no busca en subcarpetas | `~/.agents/skills` enlaza a `skills/` |
+| `i-have-adhd` siempre activo | Hook `SessionStart` en `~/.claude/settings.json` que ejecuta `hooks/i-have-adhd-always-on.sh` | Bloque entre marcadores `i-have-adhd` en `~/.codex/AGENTS.md` |
+| RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` agrega su hook `PreToolUse` | `rtk init -g --codex` agrega su hook `PreToolUse` en `~/.codex/hooks.json` |
+
+`--no-adhd-always-on` (`make adhd-on-demand`) retira el hook y el bloque de Codex; la skill sigue disponible con `/i-have-adhd`. En una sesión, "stop adhd mode" lo apaga. `--skip-rtk` (`make install-no-rtk`) omite RTK. El script no toca carpetas reales con el mismo nombre que una skill; avisa y las omite.
+
+Incorporar un cambio a `main` en el checkout principal actualiza ambas instalaciones, porque leen el repo mediante enlaces. La `code-review` personal reemplaza el comando integrado `/code-review` de Claude Code; el alias `/review` sigue ejecutando el integrado.
 
 En Conductor, el directorio de trabajo es otra copia de Git. Invoca la ruta de ese workspace para probar un draft: una skill descubierta globalmente puede seguir leyendo la versión del checkout principal.
 
