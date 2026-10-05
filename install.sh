@@ -17,9 +17,14 @@ done
 REPO=$(cd "$(dirname "$0")" && pwd -P)
 if [ -n "${AGENT_INSTALL_ROOT:-}" ]; then
   [ "$rtk" = 0 ] || { echo "AGENT_INSTALL_ROOT requiere --skip-rtk: RTK configura rutas globales." >&2; exit 2; }
-  CLAUDE_DIR="$AGENT_INSTALL_ROOT/.claude"
-  CODEX_DIR="$AGENT_INSTALL_ROOT/.codex"
-  AGENTS_DIR="$AGENT_INSTALL_ROOT/.agents"
+  install_root="$AGENT_INSTALL_ROOT"
+  case "$install_root" in
+    /*) ;;
+    *) install_root="$(pwd -P)/$install_root" ;;
+  esac
+  CLAUDE_DIR="$install_root/.claude"
+  CODEX_DIR="$install_root/.codex"
+  AGENTS_DIR="$install_root/.agents"
 else
   CLAUDE_DIR=${CLAUDE_CONFIG_DIR:-$HOME/.claude}
   CODEX_DIR=${CODEX_HOME:-$HOME/.codex}
@@ -55,10 +60,21 @@ agents_tmp=$(mktemp)
 trap 'rm -f "$settings_tmp" "$agents_tmp"' EXIT
 hook_cmd="sh \"$REPO/hooks/i-have-adhd-always-on.sh\""
 
-# Migra solo nuestros hooks ADHD conocidos; preserva RTK y cualquier otro hook.
+# Migra invocaciones simples, sin interpretar ni ejecutar el comando guardado.
+# Ante referencias ambiguas, falla antes de escribir en lugar de borrar otros comandos.
 jq_filter='
   def managed_adhd:
-    (.command? // "") | test("(^|/)(i-have-adhd-always-on|adhd-ruleset-reminder)\\.sh([\\s\"]|$)");
+    (.command? // "") as $command
+    | "(?:i-have-adhd-always-on|adhd-ruleset-reminder)[.]sh" as $script
+    | ("(?:[^\\s\u0027\"\\\\$`;&|<>()*?\\[\\]{}#]+/)?" + $script) as $bare
+    | ("\u0027(?:[^\u0027\\r\\n]*/)?" + $script + "\u0027") as $single
+    | ("\"(?:[^\"\\\\$`\\r\\n]*/)?" + $script + "\"") as $double
+    | ("\\A\\s*(?:(?:/bin/|/usr/bin/)?(?:sh|bash)\\s+)?(?:" +
+      $bare + "|" + $single + "|" + $double + ")\\s*\\z") as $simple
+    | if ($command | test($script) | not) then false
+      elif ($command | test($simple)) then true
+      else error("Hook ADHD compuesto o no reconocido: separa su invocación en un hook propio antes de instalar; no se modificó la configuración.")
+      end;
   .hooks = ((.hooks // {}) | with_entries(
     .value |= map(.hooks |= map(select(managed_adhd | not)) | select(.hooks | length > 0))
     | select(.value | length > 0)))

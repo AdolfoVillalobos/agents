@@ -121,6 +121,60 @@ class InstallTests(unittest.TestCase):
         self.assertEqual((self.config / ".codex/AGENTS.md").read_text(), "Reglas propias\n")
         self.assertTrue((self.config / ".claude/skills/i-have-adhd/SKILL.md").is_file())
 
+    def test_migrates_quoted_hooks_in_both_modes(self):
+        commands = [
+            "sh '/old path/adhd-ruleset-reminder.sh'",
+            "'/old path/i-have-adhd-always-on.sh'",
+            '/bin/bash "/old path/i-have-adhd-always-on.sh"',
+            "adhd-ruleset-reminder.sh",
+        ]
+        for args in [(), ("--no-adhd-always-on",)]:
+            with self.subTest(args=args):
+                p = self.write_config(".claude/settings.json", json.dumps({"hooks": {
+                    "UserPromptSubmit": [{"hooks": [
+                        {"type": "command", "command": command} for command in commands
+                    ]}]
+                }}))
+                self.install(*args)
+                hooks = json.loads(p.read_text()).get("hooks", {})
+                self.assertNotIn("UserPromptSubmit", hooks)
+                self.assertEqual(len(hooks.get("SessionStart", [])), 0 if args else 1)
+
+    def test_ambiguous_adhd_commands_leave_all_configuration_unchanged(self):
+        commands = [
+            "/old/adhd-ruleset-reminder.sh && custom-audit-hook",
+            "custom-audit-hook; sh '/old path/adhd-ruleset-reminder.sh'",
+            "sh '/old path/adhd-ruleset-reminder.sh' | custom-audit-hook",
+            "/old/adhd-ruleset-reminder.sh > audit.log",
+            'sh "$(custom-audit-hook)/adhd-ruleset-reminder.sh"',
+        ]
+        for command in commands:
+            for args in [(), ("--no-adhd-always-on",)]:
+                with self.subTest(command=command, args=args):
+                    original = json.dumps({"hooks": {"UserPromptSubmit": [{"hooks": [
+                        {"type": "command", "command": command}
+                    ]}]}})
+                    settings = self.write_config(".claude/settings.json", original)
+                    agents = self.write_config(".codex/AGENTS.md", "Mis reglas\n")
+                    result = self.install(*args, success=False)
+                    self.assertIn("Hook ADHD compuesto o no reconocido", result.stderr)
+                    self.assertEqual(settings.read_text(), original)
+                    self.assertEqual(agents.read_text(), "Mis reglas\n")
+                    self.assertFalse((self.config / ".claude/skills").is_symlink())
+                    self.assertFalse((self.config / ".agents").exists())
+
+    def test_relative_root_creates_working_links_and_can_be_reinstalled(self):
+        for _ in range(2):
+            result = subprocess.run(
+                ["bash", str(self.repo / "install.sh"), "--skip-rtk"],
+                cwd=self.root, env=dict(os.environ, AGENT_INSTALL_ROOT="relative config"),
+                capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            claude = self.root / "relative config/.claude/skills"
+            self.assertTrue((claude / "i-have-adhd/SKILL.md").is_file())
+            self.assertEqual(claude.resolve(), (self.repo / "skills").resolve())
+
     def test_foreign_collections_and_broken_links_are_not_replaced(self):
         for app in [".agents", ".claude"]:
             for kind in ["directory", "symlink", "broken"]:
