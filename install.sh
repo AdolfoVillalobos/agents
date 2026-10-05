@@ -129,6 +129,11 @@ fi
 # Escribe a través de enlaces de configuración existentes sin reemplazarlos.
 cat "$settings_tmp" >"$settings"
 cat "$agents_tmp" >"$agents_md"
+# El plugin anterior usa esta bandera para inyectar ADHD además de nuestro hook.
+# Consérvala en el respaldo: la activación pasa a esta colección compartida.
+if [ -f "$CLAUDE_DIR/.i-have-adhd-always" ]; then
+  mv "$CLAUDE_DIR/.i-have-adhd-always" "$backup/claude/.i-have-adhd-always"
+fi
 echo "Skills compartidas. Respaldo: $backup"
 if [ "$adhd_always_on" = 1 ]; then
   echo "i-have-adhd: siempre activo, sin duplicar hooks conocidos"

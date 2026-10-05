@@ -175,6 +175,16 @@ class InstallTests(unittest.TestCase):
             self.assertTrue((claude / "i-have-adhd/SKILL.md").is_file())
             self.assertEqual(claude.resolve(), (self.repo / "skills").resolve())
 
+    def test_legacy_plugin_flag_is_backed_up_in_both_modes(self):
+        for args in [(), ("--no-adhd-always-on",)]:
+            with self.subTest(args=args):
+                flag = self.write_config(".claude/.i-have-adhd-always", "legacy opt-in\n")
+                self.install(*args)
+                self.assertFalse(flag.exists())
+                backups = list((self.config / ".agents/backups").glob("*/claude/.i-have-adhd-always"))
+                self.assertTrue(backups)
+                self.assertTrue(all(p.read_text() == "legacy opt-in\n" for p in backups))
+
     def test_foreign_collections_and_broken_links_are_not_replaced(self):
         for app in [".agents", ".claude"]:
             for kind in ["directory", "symlink", "broken"]:

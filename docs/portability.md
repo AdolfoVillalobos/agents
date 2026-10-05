@@ -58,6 +58,8 @@ Antes de actualizar configuración, guarda una copia en `~/.agents/backups/insta
 
 `make adhd-on-demand` retira los hooks ADHD conocidos y el bloque de Codex; la skill sigue disponible bajo demanda. En una sesión, «stop adhd mode» lo apaga. `make install-no-rtk` omite la instalación y configuración de RTK. Los cambios de contenido en `i-have-adhd` requieren repetir el instalador para refrescar el bloque copiado de Codex.
 
+Si el plugin anterior de ADHD tiene la bandera `~/.claude/.i-have-adhd-always`, el instalador la mueve al respaldo después de escribir la configuración. El plugin se conserva; su inyección automática queda desactivada para que esta colección controle ADHD sin duplicarlo, también al elegir el modo bajo demanda.
+
 `make test-install` prueba el script en repositorios y configuraciones temporales. Para esa prueba, `AGENT_INSTALL_ROOT` redirige las tres carpetas de configuración y exige `--skip-rtk`, porque RTK gestiona sus propias rutas globales. Acepta rutas absolutas o relativas al directorio desde el que se ejecuta; los enlaces siempre usan destinos absolutos. No cambia `HOME` ni usa tus configuraciones reales. La suite verifica enlaces, preservación de skills y configuración, migración de hooks con comillas, rechazo de comandos compuestos sin cambios parciales, reinstalación y errores de entrada; no ejecuta los modelos ni instala RTK.
 
 Incorporar cambios al checkout principal actualiza los archivos que leen ambos agentes. Abre una sesión nueva para comprobar su descubrimiento; una sesión existente puede conservar instrucciones previas.
