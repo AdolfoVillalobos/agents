@@ -18,6 +18,12 @@ These rules apply to every response for the rest of the session, not only this o
 
 Turn them off only when the reader says "stop adhd mode" or "normal mode". Confirm in one line, then return to your default style.
 
+## Turn reminder
+
+Apply the ADHD rules only while the mode remains active. Respect "stop adhd mode" or "normal mode", including in the current message; this reminder does not reactivate it.
+
+Answer the current request first. For a narrow factual question, prefer one to three sentences with only the necessary support. Expand when the current request needs detail; an earlier request for an explanation does not expand later questions. Before sending, run the pre-send check and remove unrequested implementation plans and tangents.
+
 ## What ADHD changes about reading
 
 Five facts drive every rule below:

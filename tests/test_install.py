@@ -100,7 +100,8 @@ class InstallTests(unittest.TestCase):
         actual = json.loads(p.read_text())
         self.assertEqual(actual["permissions"], settings["permissions"])
         self.assertEqual(actual["hooks"]["PreToolUse"], settings["hooks"]["PreToolUse"])
-        self.assertEqual(actual["hooks"]["UserPromptSubmit"], [{"hooks": [keep]}])
+        self.assertEqual(actual["hooks"]["UserPromptSubmit"][0], {"hooks": [keep]})
+        self.assertEqual(len(actual["hooks"]["UserPromptSubmit"]), 2)
         self.assertEqual(len(actual["hooks"]["SessionStart"]), 1)
         self.assertTrue((self.config / ".codex/AGENTS.md").read_text().startswith("# Mis reglas\nConservar esta instrucción.\n"))
         backups = list((self.config / ".agents/backups").glob("*/claude/settings.json"))
@@ -137,12 +138,32 @@ class InstallTests(unittest.TestCase):
                 }}))
                 self.install(*args)
                 hooks = json.loads(p.read_text()).get("hooks", {})
-                self.assertNotIn("UserPromptSubmit", hooks)
+                reminders = hooks.get("UserPromptSubmit", [])
+                self.assertEqual(len(reminders), 0 if args else 1)
+                if reminders:
+                    self.assertIn("i-have-adhd-reminder.sh", reminders[0]["hooks"][0]["command"])
                 self.assertEqual(len(hooks.get("SessionStart", [])), 0 if args else 1)
+
+    def test_prompt_reminder_is_brief_and_does_not_reactivate_stopped_mode(self):
+        self.install()
+        settings = json.loads((self.config / ".claude/settings.json").read_text())
+        command = settings["hooks"]["UserPromptSubmit"][0]["hooks"][0]["command"]
+        output = subprocess.check_output(["sh", "-c", command], text=True)
+        self.assertIn("stop adhd mode", output)
+        self.assertIn("one to three sentences", output)
+        self.assertNotIn("ADHD MODE ACTIVE", output)
+        self.assertLessEqual(len(output.split()), 90)
+
+        skill = self.repo / "skills/i-have-adhd/SKILL.md"
+        text = skill.read_text()
+        skill.write_text(text.replace("## Turn reminder\n", "## Turn reminder\nLive rule update.\n"))
+        refreshed = subprocess.check_output(["sh", "-c", command], text=True)
+        self.assertIn("Live rule update.", refreshed)
 
     def test_ambiguous_adhd_commands_leave_all_configuration_unchanged(self):
         commands = [
             "/old/adhd-ruleset-reminder.sh && custom-audit-hook",
+            "/old/i-have-adhd-reminder.sh && custom-audit-hook",
             "custom-audit-hook; sh '/old path/adhd-ruleset-reminder.sh'",
             "sh '/old path/adhd-ruleset-reminder.sh' | custom-audit-hook",
             "/old/adhd-ruleset-reminder.sh > audit.log",
