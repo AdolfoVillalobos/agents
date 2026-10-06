@@ -59,13 +59,14 @@ settings_tmp=$(mktemp)
 agents_tmp=$(mktemp)
 trap 'rm -f "$settings_tmp" "$agents_tmp"' EXIT
 hook_cmd="sh \"$REPO/hooks/i-have-adhd-always-on.sh\""
+reminder_cmd="sh \"$REPO/hooks/i-have-adhd-reminder.sh\""
 
 # Migra invocaciones simples, sin interpretar ni ejecutar el comando guardado.
 # Ante referencias ambiguas, falla antes de escribir en lugar de borrar otros comandos.
 jq_filter='
   def managed_adhd:
     (.command? // "") as $command
-    | "(?:i-have-adhd-always-on|adhd-ruleset-reminder)[.]sh" as $script
+    | "(?:i-have-adhd-(?:always-on|reminder)|adhd-ruleset-reminder)[.]sh" as $script
     | ("(?:[^\\s\u0027\"\\\\$`;&|<>()*?\\[\\]{}#]+/)?" + $script) as $bare
     | ("\u0027(?:[^\u0027\\r\\n]*/)?" + $script + "\u0027") as $single
     | ("\"(?:[^\"\\\\$`\\r\\n]*/)?" + $script + "\"") as $double
@@ -82,12 +83,14 @@ jq_filter='
       .hooks.SessionStart = ((.hooks.SessionStart // []) +
         [{matcher: "startup|resume|clear|compact",
           hooks: [{type: "command", command: $cmd, timeout: 30}]}])
+      | .hooks.UserPromptSubmit = ((.hooks.UserPromptSubmit // []) +
+        [{hooks: [{type: "command", command: $reminder, timeout: 10}]}])
     else . end
   | if .hooks == {} then del(.hooks) else . end'
 if [ -f "$settings" ]; then
-  jq --arg cmd "$hook_cmd" --argjson on "$adhd_always_on" "$jq_filter" "$settings" >"$settings_tmp"
+  jq --arg cmd "$hook_cmd" --arg reminder "$reminder_cmd" --argjson on "$adhd_always_on" "$jq_filter" "$settings" >"$settings_tmp"
 else
-  printf '{}\n' | jq --arg cmd "$hook_cmd" --argjson on "$adhd_always_on" "$jq_filter" >"$settings_tmp"
+  printf '{}\n' | jq --arg cmd "$hook_cmd" --arg reminder "$reminder_cmd" --argjson on "$adhd_always_on" "$jq_filter" >"$settings_tmp"
 fi
 
 # Rechaza un bloque incompleto antes de modificar configuración alguna.

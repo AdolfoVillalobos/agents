@@ -20,7 +20,7 @@ Los grupos son navegación, no nuevos directorios ni orden obligatorio de ejecuc
 
 | Skill | Uso | Procedencia |
 | --- | --- | --- |
-| [i-have-adhd](../skills/i-have-adhd/SKILL.md) | Respuestas que empiezan por la acción, pasos numerados y sin rodeos. `install.sh` la carga en cada sesión | Copiada de [`ayghri/i-have-adhd`](https://github.com/ayghri/i-have-adhd) en `839872f`, sin cambios; licencia MIT en `LICENSE.txt` |
+| [i-have-adhd](../skills/i-have-adhd/SKILL.md) | Respuestas que empiezan por la acción y respetan el alcance de cada pregunta; recordatorio por turno en Claude | Adaptación local de [`ayghri/i-have-adhd`](https://github.com/ayghri/i-have-adhd) en `839872f`; conserva licencia MIT en `LICENSE.txt` |
 
 [RTK](https://github.com/rtk-ai/rtk) acompaña a esta colección, pero no es una skill: es un binario con hooks propios que `install.sh` instala y configura.
 

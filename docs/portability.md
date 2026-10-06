@@ -51,12 +51,14 @@ El instalador acepta una carpeta real o un enlace que ya resuelva a esta colecci
 | Qué | Claude Code | Codex |
 | --- | --- | --- |
 | Skills | Un enlace de carpeta a `~/.agents/skills` | Carpeta real del checkout o un enlace a `skills/` |
-| `i-have-adhd` siempre activo | Un hook `SessionStart` que lee `hooks/i-have-adhd-always-on.sh` | Bloque entre marcadores en `~/.codex/AGENTS.md` |
+| `i-have-adhd` siempre activo | `SessionStart` carga las reglas; `UserPromptSubmit` refresca un recordatorio breve | Bloque entre marcadores en `~/.codex/AGENTS.md` |
 | RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` | `rtk init -g --codex` |
 
 Antes de actualizar configuración, guarda una copia en `~/.agents/backups/install-…`. Los respaldos y `skills/synced/` están excluidos de Git. Conserva los demás ajustes y hooks, incluidos los de RTK. Retira invocaciones simples de `i-have-adhd-always-on.sh` y `adhd-ruleset-reminder.sh`, directamente o mediante `sh`/`bash`, con rutas sin comillas o entre comillas simples o dobles. Si un hook combina ADHD con otros comandos, redirecciones o una sintaxis no reconocida, se detiene sin modificar la configuración: hay que separar la invocación ADHD en su propio hook. También rechaza JSON inválido o un bloque de Codex incompleto antes de escribir cambios.
 
 `make adhd-on-demand` retira los hooks ADHD conocidos y el bloque de Codex; la skill sigue disponible bajo demanda. En una sesión, «stop adhd mode» lo apaga. `make install-no-rtk` omite la instalación y configuración de RTK. Los cambios de contenido en `i-have-adhd` requieren repetir el instalador para refrescar el bloque copiado de Codex.
+
+El recordatorio de Claude se extrae de `Turn reminder` en `skills/i-have-adhd/SKILL.md` en cada mensaje. Refuerza el alcance de la pregunta actual sin repetir las reglas completas ni reactivar el modo después de «stop adhd mode». Que un hook entregue las instrucciones demuestra su carga, no garantiza que el modelo las siga: revisa también la respuesta. Los [casos de evaluación](../skills/i-have-adhd/evaluacion.md) separan ambas comprobaciones.
 
 Si el plugin anterior de ADHD tiene la bandera `~/.claude/.i-have-adhd-always`, el instalador la mueve al respaldo después de escribir la configuración. El plugin se conserva; su inyección automática queda desactivada para que esta colección controle ADHD sin duplicarlo, también al elegir el modo bajo demanda.
 
