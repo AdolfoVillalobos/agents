@@ -8,6 +8,8 @@ Cada skill se distribuye como una carpeta con `SKILL.md`, frontmatter `name` y `
 
 Portabilidad del formato no garantiza idéntico comportamiento ni descubrimiento automático. Un agente necesita poder leer archivos y, para trabajar sobre repositorios, inspeccionar Git. La publicación requiere además una integración con el proveedor de PRs.
 
+Las skills `review-design`, `review-qa` y `review-readiness` se distribuyen con esta colección: comparten recursos en `skills/code-review/references/` mediante rutas relativas. `review-readiness` también consulta `skills/create-pr/SKILL.md` cuando redacta una descripción. Para trasladarlas, conserva esas carpetas hermanas; copiar solo una de las tres deja dependencias sin resolver. No requieren adaptadores, subagentes ni configuración específica de un proveedor. Esto describe su estructura, no una validación de comportamiento en Claude o Codex.
+
 ## Usar desde cualquier agente
 
 La entrada explícita evita ambigüedad sobre qué versión estás probando:
