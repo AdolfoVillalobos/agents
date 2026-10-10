@@ -4,7 +4,7 @@ Esta reescritura parte de la versión de `create-pr` aportada por el usuario el 
 
 ## Convenciones
 
-- Ejemplo de título: `[ONB-453] Agregar modelo OrganizationSetupLink y su migración`.
+- Ejemplo de título: `[ONB-453] Add OrganizationSetupLink model and migration`.
 - En GitHub se puede usar `gh` para crear el draft y asignarlo al usuario autenticado.
 
 ## Linear y ramas
@@ -36,7 +36,7 @@ Consultar una invoice fallaba si no se encontraba su customer.
 
 ## ¿Qué hay de nuevo?
 
-- [x] Se devuelve `null` como customer cuando no existe.
+- [x] Devuelvo `null` como customer cuando no existe.
 ```
 
 No agregar más bullets para alcanzar una cantidad. La [investigación de 50 PRs](npcastro-pr-writing.md) documenta la muestra y las diferencias entre hábitos observados y preferencias del usuario.
@@ -50,9 +50,9 @@ Para habilitar multi-file por slot había que hacer unos tweaks al modelo y a lo
 
 ## ¿Qué hay de nuevo?
 
-- [x] Flag `multi` (default `false`) en `Onboarding::DocumentSlot`
-- [x] Se elimina el índice único `(onboarding_step_id, slot_key)` y su validación
-- [x] El serializer de dashboard expone `documents[]` por slot y mantiene `document` por back-compat
+- [x] Agregué el flag `multi` (default `false`) en `Onboarding::DocumentSlot`
+- [x] Eliminé el índice único `(onboarding_step_id, slot_key)` y su validación
+- [x] Expuse `documents[]` por slot en dashboard y mantuve `document` por compatibilidad
 
 ## Consideraciones
 NA
@@ -63,7 +63,7 @@ Si la validación aporta contexto sobre el comportamiento, la sección opcional 
 ```markdown
 ## Pruebas
 
-- Carga manual de dos documentos en un slot multi: ambos visibles al recargar.
+- Probé cargar dos documentos en un slot multi. Ambos siguen visibles al recargar.
 ```
 
 El resultado es ilustrativo; solo incluirlo cuando esa comprobación se haya realizado.
@@ -82,4 +82,4 @@ En su lugar la personería es un único documento del paso completo, y es opcion
 los poderes de representación normalmente ya aparecen en la escritura.
 ```
 
-Debería ser: `El onboarding de Chile necesita un paso para declarar representantes legales y subir su cédula. Reusa el modelo de México con menos campos.`
+Debería ser: `El onboarding de Chile necesita un paso para declarar representantes legales y subir su cédula. Reutilicé el modelo de México con menos campos.`

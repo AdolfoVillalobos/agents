@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | [code-review](../skills/code-review/SKILL.md) | Buscar fallas y contrastar cada hallazgo con evidencia | Draft propio; adaptado del review por standards/spec de `mattpocock/skills` |
 | [diff-minimality](../skills/diff-minimality/SKILL.md) | Simplificar preservando comportamiento | Draft local existente, separado del flujo de publicación |
-| [create-pr](../skills/create-pr/SKILL.md) | Crear un PR draft autoasignado, con descripción breve en español y aprobación del texto | Draft basado en la versión Fintoc aportada por el usuario y el estudio de 50 PRs de `npcastro`; referencias y casos de evaluación adjuntos |
+| [create-pr](../skills/create-pr/SKILL.md) | Crear un PR draft autoasignado, con título en inglés, descripción breve en español y primera persona cuando corresponde | Draft basado en la versión Fintoc aportada por el usuario y el estudio de 50 PRs de `npcastro`; referencias y casos de evaluación adjuntos |
 
 Estas tres usan instrucciones independientes del proveedor. `create-pr` incluye una referencia de Fintoc con convenciones y ejemplos de redacción. Su estructura fue revisada; su comportamiento todavía debe compararse en tareas reales con cada agente.
 

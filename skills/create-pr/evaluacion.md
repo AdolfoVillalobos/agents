@@ -4,7 +4,7 @@ Reescritura del 2026-09-14 basada en la versión aportada por el usuario. Estos 
 
 | Prompt y contexto | Resultado esperado |
 | --- | --- |
-| «Abre un PR», en una rama `onb-453-feature`, con cambios y template disponibles | Lee el issue, recupera su rama sugerida y revisa el diff y los commits contra `main`; propone título en español con `[ONB-453]`, cuerpo en español de hasta 120 palabras y opciones Ok / Shorter / Missing something. Espera la selección antes de crear. |
+| «Abre un PR», en una rama `onb-453-feature`, con cambios y template disponibles | Lee el issue, recupera su rama sugerida y revisa el diff y los commits contra `main`; propone título en inglés con `[ONB-453]`, cuerpo en español de hasta 120 palabras y opciones Ok / Shorter / Missing something. Espera la selección antes de crear. |
 | «Subamos el PR contra release», sin ID en la rama | Usa `release` como base y pide ID manual o buscar/crear un issue mediante la integración disponible. |
 | «Shorter», tras mostrar una propuesta | Recorta el cuerpo, conserva las secciones aplicables y vuelve a presentar el texto sin crear el PR. |
 | «Missing something: requiere coordinación con frontend» | Agrega esa coordinación en Consideraciones, respeta el límite y vuelve a presentar el texto para aprobación. |
@@ -39,7 +39,18 @@ Reescritura del 2026-09-14 basada en la versión aportada por el usuario. Estos 
 
 | Prompt y contexto | Resultado esperado |
 | --- | --- |
-| «Create a PR», con rama `onb-453-add-setup-link`, commits y template en inglés | Redacta título, descripción y encabezados en español, sin footer de atribución. Conserva `[ONB-453]`, `OrganizationSetupLink` y otros identificadores sin traducir. Ejemplo de título: `[ONB-453] Agregar modelo OrganizationSetupLink y su migración`. |
+| «Create a PR», con rama `onb-453-add-setup-link`, commits y template en inglés | Redacta título en inglés y descripción y encabezados en español, sin footer de atribución. Conserva `[ONB-453]`, `OrganizationSetupLink` y otros identificadores sin traducir. Ejemplo de título: `[ONB-453] Add OrganizationSetupLink model and migration`. |
+
+## Voz y puntuación
+
+| Prompt y contexto | Resultado esperado |
+| --- | --- |
+| «Redacta el PR», con una validación agregada y una comprobación ejecutada | Usa «Agregué la validación» y «Verifiqué…» cuando resulte natural. Puede describir el problema de forma impersonal. |
+| «Redacta el PR», sin pruebas manuales documentadas | No escribe «Probé manualmente» ni atribuye experiencias al autor para forzar la primera persona. |
+| Borrador con `Agregué validación; ahora se rechaza el monto` o `Corrige retries -- evita duplicados` | Reescribe con puntos o comas, sin punto y coma, doble guion ni raya como separadores de prosa. El título final queda en inglés. |
+| El cuerpo necesita citar `bin/check --dry-run` y usar checkboxes Markdown | Conserva el comando y los marcadores. La regla de puntuación no altera sintaxis técnica. |
+| «Pon solo el título en español» | Cambia el título según la petición explícita y mantiene el cuerpo en español. |
+| «Pon solo la descripción en inglés» | Cambia el cuerpo y sus encabezados a inglés, conservando el título en inglés por defecto. |
 
 ## Validación en la descripción
 
@@ -75,7 +86,7 @@ Reescritura del 2026-09-14 basada en la versión aportada por el usuario. Estos 
 | --- | --- |
 | «Redacta este fix pequeño», con un solo cambio observable | Una frase de contexto y un solo bullet concreto. No agrega relleno para llegar a 80 palabras ni inventa un segundo cambio. |
 | «Abre el PR», con descripción inicial que recorre cada archivo | Agrupa por cambios o efectos, usa normalmente 1–3 bullets de hasta 15 palabras y elimina el recorrido de archivos. |
-| «Usa los PRs de npcastro como referencia» | Adopta su contexto breve y cambios concretos. No copia prefijos del bot, tests genéricos, cuerpos vacíos ni títulos en inglés por encima del español por defecto. |
+| «Usa los PRs de npcastro como referencia» | Adopta su contexto breve y cambios concretos. No copia prefijos del bot, tests genéricos ni cuerpos vacíos. Mantiene el título en inglés y el cuerpo en español por defecto. |
 | «Describe esta limitación de compatibilidad», con un tradeoff importante | Conserva la limitación en Consideraciones y recorta detalles del diff para mantener como máximo 120 palabras. |
 
 ## Comprobación estructural

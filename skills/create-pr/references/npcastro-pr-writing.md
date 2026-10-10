@@ -56,7 +56,7 @@ Estas son recomendaciones a partir de la muestra, no reglas declaradas por el au
 
 | Decisión de la skill | Relación con la muestra |
 | --- | --- |
-| Español por defecto para título y descripción | Es una preferencia explícita; la muestra mezcla idiomas en los títulos. |
+| Título en inglés y descripción en español por defecto | Preferencia explícita actualizada el 2026-10-10. La muestra mezcla idiomas en los títulos. |
 | Objetivo de 80 palabras y máximo de 120 | Compatible con gran parte de la muestra, pero no es una regla del autor: 9/50 cuerpos superan 120 incluso sin contar encabezados. |
 | Sin enlaces a Linear en la descripción | Coincide con 0/50 enlaces observados. Esto no demuestra cómo se vincularon los issues. |
 | Omitir Tests cuando solo repite CI | Es una preferencia explícita: la muestra sí repite tests unitarios/de integración. No se inspeccionó la CI de cada PR ni se deduce de esas etiquetas qué tests se ejecutaron. |
