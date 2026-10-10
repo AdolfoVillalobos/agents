@@ -1,6 +1,6 @@
 ---
 name: create-pr
-description: Open a pull request with a concise review format — draft, self-assigned, Spanish title and body by default, an issue ID prefix, the issue tracker's suggested branch when available, and a body under 120 words that signposts the diff instead of summarizing it. Use when the user asks to create/open/raise a PR, says "PR this", "abre un PR", "subamos el PR", or runs `/create-pr`.
+description: Open a pull request with a concise review format — draft, self-assigned, English title and Spanish body by default, an issue ID prefix, the issue tracker's suggested branch when available, and a body under 120 words that signposts the diff instead of summarizing it. Use when the user asks to create/open/raise a PR, says "PR this", "abre un PR", "subamos el PR", or runs `/create-pr`.
 ---
 
 # Create PR
@@ -43,7 +43,7 @@ For a concrete sequence, read the [commit narrative example](references/fintoc.m
 
 ## Pull request
 
-Use the available pull-request integration. Create the PR as a draft and assign the authenticated user. Write the PR title and description IN SPANISH BY DEFAULT, including section headings, even when the conversation, branch name, commits, or template are in English. Use another language only when the user explicitly requests it. Keep issue IDs, code identifiers, commands, and product names unchanged.
+Use the available pull-request integration. Create the PR as a draft and assign the authenticated user. Write the PR title IN ENGLISH and the description IN SPANISH BY DEFAULT, including Spanish section headings, regardless of the conversation, branch, commit, or template language. Apply an explicit language override only to the part the user names. A request for the whole PR in another language applies to both title and body. Keep issue IDs, code identifiers, commands, and product names unchanged.
 
 **Before creating the PR:** show the user the proposed title and body, then ask:
 
@@ -55,11 +55,15 @@ Only create the PR after the user selects "Ok".
 
 ### Title
 
-Brief, starts with the issue ID in brackets, and names the action and affected object or concrete effect in the selected language. Omit vague introductions and merge-bot prefixes.
+Brief, starts with the issue ID in brackets, and names the action and affected object or concrete effect in English by default. Omit vague introductions and merge-bot prefixes.
 
 ### Body
 
-Read the PR template at `.github/pull_request_template.md` for the section structure. Preserve its structure and translate headings into the selected language.
+Read the PR template at `.github/pull_request_template.md` for the section structure. Preserve its structure and translate headings into Spanish unless the user explicitly requests another body language.
+
+Prefer first-person singular from the PR author's perspective when describing changes or checks supported by the diff and session evidence, such as "Agregué", "Corregí", or "Verifiqué". Omit an unnecessary "yo". Keep problem statements and system behavior impersonal when that reads more naturally. Do not invent personal observations, manual testing, or shared authorship to force first person.
+
+Use plain punctuation in PR titles and descriptions. Do not use semicolons (`;`), double hyphens (`--`), or em/en dashes as prose separators. Prefer short sentences with periods or commas, and use a colon only when needed. Preserve literal code, identifiers, command flags such as `--dry-run`, URLs, and Markdown syntax. This rule changes prose punctuation, not technical syntax.
 
 Keep issue references exclusively in the PR title and branch. The description must contain no Linear/issue-tracker URLs or issue IDs, whether linked, plain text, parenthetical, or hidden in Markdown link definitions. If copied context ends with an issue reference in parentheses, remove that entire reference and the empty parentheses; retain only the explanation of the problem. Apply this to every section, including Contexto, even when the reference comes from the issue or PR template.
 
@@ -81,6 +85,6 @@ Read the [Fintoc writing examples](references/fintoc.md#ejemplos-de-redacción) 
 
 ## Verify delivery
 
-Before creating or amending commits, check their messages against the attribution rule above. Before showing the proposed PR text and again before publishing, check the complete description against both the attribution and issue-reference rules above. Remove any remaining reference and recheck; do not merely turn a Markdown link into a plain issue ID. Associate the PR through its branch, title, or the tracker's PR-linking capability instead. This restriction applies to the PR description, not to the association stored on the issue.
+Before creating or amending commits, check their messages against the attribution rule above. Before showing the proposed PR text and again before publishing, check title/body language, natural first-person wording, and prose punctuation, then check the complete description against the attribution and issue-reference rules above. Remove any remaining reference and recheck; do not merely turn a Markdown link into a plain issue ID. Associate the PR through its branch, title, or the tracker's PR-linking capability instead. This restriction applies to the PR description, not to the association stored on the issue.
 
-After creation or update, verify the published title, body, base, and head, including that the body still satisfies the attribution and issue-reference rules. Check the issue's linked PRs when the integration is available, including for an additional PR on the same issue. Report unverified linkage as unverified; a branch name alone is not proof that the integration completed the association. Return the PR URL.
+After creation or update, verify the published title, body, base, and head, including language, voice, punctuation, and the body's attribution and issue-reference rules. Check the issue's linked PRs when the integration is available, including for an additional PR on the same issue. Report unverified linkage as unverified; a branch name alone is not proof that the integration completed the association. Return the PR URL.
