@@ -1,14 +1,15 @@
 # Revisiones especializadas
 
-Tres puntos de entrada para pedir una revisión concreta sin reemplazar `code-review`:
+Tres puntos de entrada para pedir una revisión concreta, y uno para redactar los comentarios, sin reemplazar `code-review`:
 
 | Petición | Skill | Resultado |
 | --- | --- | --- |
 | «Revisa el diseño de esta PR» | `review-design` | Problemas de estructura y simplificaciones justificadas, sin editar |
 | «Busca bugs recorriendo los flujos» | `review-qa` | Regresiones verificadas por ejecución o trazado, con sus límites |
 | «¿Está lista para merge y despliegue?» | `review-readiness` | Decisión condicionada a intención, compatibilidad y riesgo operativo |
+| «Déjame los comentarios para pegar» | `review-comments` | Borradores anclados a la línea, a partir de hallazgos que ya sobrevivieron |
 
-Para un pase completo se pueden pedir las tres, secuencialmente sobre el mismo alcance. No se requieren agentes paralelos. La rúbrica compartida vive en `skills/code-review/references/review-protocol.md`; el comportamiento de la skill general `code-review` no cambia.
+Para un pase completo se pueden pedir las tres primeras, secuencialmente sobre el mismo alcance, y después `review-comments` si hacen falta borradores. No se requieren agentes paralelos. La rúbrica compartida vive en `skills/code-review/references/review-protocol.md`; el comportamiento de la skill general `code-review` no cambia.
 
 Mientras estos archivos estén solo en un worktree, evalúalos por su ruta explícita. Por ejemplo: «Lee `skills/review-qa/SKILL.md` de este checkout y úsala para revisar el repositorio indicado contra su base real». La instalación global puede contener otra versión. Las dependencias entre carpetas están descritas en [portabilidad](portability.md).
 
@@ -28,6 +29,16 @@ Cambios deliberados al convertir los prompts en skills:
 - Rúbrica compartida y referencia condicional de pagos. Se conserva la representación monetaria del repositorio, sin imponer enteros o decimales universalmente.
 - Descripciones breves en español, sin referencias a issues ni atribuciones a proveedores; pruebas centradas en comportamiento. Una descripción pobre no constituye por sí sola un defecto bloqueante.
 - Se omiten plantillas vacías, conteos de hallazgos descartados, elogios obligatorios y tres mejoras forzosas. La revisión puede terminar sin hallazgos.
+
+## Comentarios para pegar
+
+`review-comments` adapta el paquete `pr-review-assist` y el brief de comentarios aportados el 2026-10-13. El brief recoge Conventional Comments, las guías de Google y GitLab, y la mecánica de líneas y sugerencias de GitHub. Esta adaptación usa esos documentos como material de diseño. No vuelve a verificar sus afirmaciones sobre productos, límites numéricos de la industria ni taxonomías P0–P3.
+
+Entra el formato del comentario: ancla en una línea del diff, etiqueta que dice si bloquea, fence `suggestion` solo para un reemplazo exacto, nits agrupados, elogio solo cuando es concreto, y borrador en el idioma del PR con una nota privada aparte. Publicar sigue pidiendo autorización.
+
+Queda fuera lo que ya cubre otra skill o ata la colección a un equipo: las tres lentes de investigación, el checklist de pagos, los modos `personal` y `work`, la inferencia por el remote, y las instrucciones de instalación.
+
+Los casos están en [evaluacion.md](../skills/review-comments/evaluacion.md). Validación estructural; evaluación con modelos pendiente.
 
 ## Casos de evaluación
 
