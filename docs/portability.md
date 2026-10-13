@@ -70,7 +70,7 @@ Incorporar cambios al checkout principal actualiza los archivos que leen ambos a
 
 ### Review en GitHub
 
-El workflow de review utiliza `skills/code-review/SKILL.md` de la revisión base del PR, con pasadas secuenciales y comentarios en español. Las modificaciones de esa skill dentro del PR son contenido a revisar; el workflow no las usa como sus propias instrucciones. Conservamos también el workflow que responde a menciones `@claude`.
+El workflow de review corre Codex con `openai/codex-action` y el perfil `:read-only`. Copia `skills/code-review/SKILL.md` de la revisión base del PR, hace las pasadas en secuencia y publica la revisión en español. Las modificaciones de esa skill dentro del PR son contenido a revisar; el workflow no las usa como sus propias instrucciones. Codex no comenta ni escribe en el repositorio: un job posterior publica la revisión completa como un solo comentario. Hace falta el secreto `OPENAI_API_KEY`. Conservamos también el workflow que responde a menciones `@claude`.
 
 En Conductor, el directorio de trabajo es otra copia de Git. Invoca la ruta de ese workspace para probar un draft: una skill descubierta globalmente puede seguir leyendo la versión del checkout principal.
 
