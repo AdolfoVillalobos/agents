@@ -9,8 +9,9 @@ Empieza por el [catálogo](docs/catalog.md). Las skills viven en `skills/<nombre
 | Cuestionar una implementación | [code-review](skills/code-review/SKILL.md) | Hallazgos con evidencia y contraargumentos comprobados |
 | Reducir complejidad | [diff-minimality](skills/diff-minimality/SKILL.md) | Cambios más simples que preservan comportamiento |
 | Preparar un PR entendible | [create-pr](skills/create-pr/SKILL.md) | Título, descripción y validación basados en el diff final |
+| Dejar comentarios para pegar | [review-comments](skills/review-comments/SKILL.md) | Borradores anclados a la línea, a partir de un review ya hecho |
 
-Estas tres son drafts propios para iterar. El resto del catálogo conserva las skills importadas y su estado de portabilidad pendiente.
+Estas skills son drafts propios para iterar. El resto del catálogo conserva las skills importadas y su estado de portabilidad pendiente.
 
 ## Organización
 

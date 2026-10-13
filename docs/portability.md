@@ -8,7 +8,7 @@ Cada skill se distribuye como una carpeta con `SKILL.md`, frontmatter `name` y `
 
 Portabilidad del formato no garantiza idéntico comportamiento ni descubrimiento automático. Un agente necesita poder leer archivos y, para trabajar sobre repositorios, inspeccionar Git. La publicación requiere además una integración con el proveedor de PRs.
 
-Las skills `review-design`, `review-qa` y `review-readiness` se distribuyen con esta colección: comparten recursos en `skills/code-review/references/` mediante rutas relativas. `review-readiness` también consulta `skills/create-pr/SKILL.md` cuando redacta una descripción. Para trasladarlas, conserva esas carpetas hermanas; copiar solo una de las tres deja dependencias sin resolver. No requieren adaptadores, subagentes ni configuración específica de un proveedor. Esto describe su estructura, no una validación de comportamiento en Claude o Codex.
+Las skills `review-design`, `review-qa`, `review-readiness` y `review-comments` se distribuyen con esta colección. Las tres primeras comparten recursos en `skills/code-review/references/` mediante rutas relativas. `review-readiness` también consulta `skills/create-pr/SKILL.md` cuando redacta una descripción. `review-comments` consulta ese mismo protocolo y, si todavía no hay hallazgos, la skill del pase que corresponda. También trae `references/github-posting.md`, que se lee solo al publicar en GitHub. Para trasladarlas, conserva esas carpetas hermanas. Copiar solo `review-comments` deja el protocolo sin resolver. No requieren adaptadores ni subagentes. Esto describe su estructura, no una validación de comportamiento en Claude o Codex.
 
 ## Usar desde cualquier agente
 

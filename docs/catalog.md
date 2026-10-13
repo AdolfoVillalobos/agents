@@ -17,8 +17,9 @@ Estas tres usan instrucciones independientes del proveedor. `create-pr` incluye 
 | [review-design](../skills/review-design/SKILL.md) | Revisar límites, estructura y oportunidades de simplificación de un diff | Draft propio a partir del prompt A aportado por el usuario |
 | [review-qa](../skills/review-qa/SKILL.md) | Buscar regresiones recorriendo flujos y ejecutando comprobaciones focalizadas | Draft propio a partir del prompt B aportado por el usuario |
 | [review-readiness](../skills/review-readiness/SKILL.md) | Evaluar intención, despliegue, compatibilidad y preparación para merge | Draft propio a partir del prompt C aportado por el usuario |
+| [review-comments](../skills/review-comments/SKILL.md) | Convertir un review ya hecho en comentarios anclados, listos para pegar | Draft propio a partir del paquete `pr-review-assist` y el brief de comentarios aportados el 2026-10-13 |
 
-Son alternativas para pedir un pase específico; `code-review` conserva su revisión general. Comparten [protocolo y rúbrica](../skills/code-review/references/review-protocol.md), con una [referencia de pagos](../skills/code-review/references/payment-invariants.md) que se lee solo cuando aplica. [Procedencia, adaptaciones y casos de evaluación](review-skills.md). Validación estructural; evaluación con modelos pendiente.
+`review-design`, `review-qa` y `review-readiness` son alternativas para pedir un pase específico. `code-review` conserva la revisión general. `review-comments` formatea los hallazgos que sobrevivieron. Si todavía no hay informe, corre antes el pase que corresponda. Comparten [protocolo y rúbrica](../skills/code-review/references/review-protocol.md), con una [referencia de pagos](../skills/code-review/references/payment-invariants.md) que se lee solo cuando aplica. [Procedencia, adaptaciones y casos de evaluación](review-skills.md). Validación estructural; evaluación con modelos pendiente.
 
 El draft `review-pr` de `~/Documents/fintoc/claude-config/skills/review-pr` aportó contexto para la revisión: intención antes del código, lectura fuera del diff y comentarios respetuosos. Sigue en su instalación original; la versión mantenida aquí se llama `code-review`.
 
@@ -95,7 +96,7 @@ Los grupos son navegación, no nuevos directorios ni orden obligatorio de ejecuc
 
 ## Procedencia
 
-La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33 y las tres revisiones especializadas a 36. `.skill-lock.json` conserva repositorios y hashes de la instalación original:
+La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36 y `review-comments` a 37. `.skill-lock.json` conserva repositorios y hashes de la instalación original:
 
 - `mattpocock/skills`: colección de ingeniería, incluida la base original de `code-review`.
 - `vercel-labs/agent-skills`: composición React, guidelines de diseño y escritura.
