@@ -13,6 +13,8 @@ Empieza por el [catálogo](docs/catalog.md). Las skills viven en `skills/<nombre
 
 Estas skills son drafts propios para iterar. El resto del catálogo conserva las skills importadas y su estado de portabilidad pendiente.
 
+También incluye las [25 skills de Addy Osmani](docs/addyosmani-agent-skills.md), con sus referencias compartidas y licencia MIT, disponibles mediante la misma instalación.
+
 ## Organización
 
 ```text

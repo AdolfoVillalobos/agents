@@ -76,6 +76,8 @@ En Conductor, el directorio de trabajo es otra copia de Git. Invoca la ruta de e
 
 ## Skills importadas
 
+La colección de [Addy Osmani](addyosmani-agent-skills.md) conserva la estructura original: `skills/<nombre>/` y siete documentos compartidos en `references/`, en la raíz del repo. Las rutas `../../references/…` de cada skill se resuelven contra esa estructura. Los enlaces de carpeta de `install.sh` la conservan; copiar una skill por separado requiere trasladar también sus referencias. Cada skill lleva su licencia MIT y `references/` conserva otra copia para distribuir esos documentos.
+
 Las skills fuera del grupo principal siguen como importadas, sin promesa de portabilidad auditada. Algunas nombran herramientas de Claude, exigen subagentes o dependen del setup de Matt Pocock. Migra una cuando la vayas a usar: conserva el comportamiento útil, elimina dependencias implícitas y prueba la nueva versión.
 
 `.skill-lock.json` registra instalaciones de terceros, no es un manifiesto de esta colección personal. Sus hashes reflejan el contenido importado, no las modificaciones propias. Evita actualizar automáticamente `code-review` desde su origen: ahora es una variante local.
