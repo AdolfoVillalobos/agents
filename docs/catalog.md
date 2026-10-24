@@ -94,13 +94,48 @@ Los grupos son navegación, no nuevos directorios ni orden obligatorio de ejecuc
 | [find-skills](../skills/find-skills/SKILL.md) | Descubrir skills de terceros |
 | [setup-matt-pocock-skills](../skills/setup-matt-pocock-skills/SKILL.md) | Configurar el workflow importado |
 
+### Colección de Addy Osmani
+
+Las 25 skills de [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) se importaron desde [`aeac41d`](https://github.com/addyosmani/agent-skills/commit/aeac41d4d005999432bb7312f7ff06383a91d59d). Conservan sus nombres, instrucciones y recursos originales; cada carpeta incluye la licencia MIT de Addy Osmani. Estado: **importadas, sin auditoría de comportamiento ni portabilidad completa**. Las referencias compartidas viven en [`references/`](../references/); conserva esa carpeta junto a `skills/` al trasladarlas. [Instalación, alcance y comprobaciones](addyosmani-agent-skills.md).
+
+| Skill | Uso |
+| --- | --- |
+| [using-agent-skills](../skills/using-agent-skills/SKILL.md) | Descubrir el flujo adecuado de esta colección |
+| [interview-me](../skills/interview-me/SKILL.md) | Aclarar requisitos con preguntas |
+| [idea-refine](../skills/idea-refine/SKILL.md) | Refinar y contrastar ideas |
+| [spec-driven-development](../skills/spec-driven-development/SKILL.md) | Definir una especificación antes de implementar |
+| [planning-and-task-breakdown](../skills/planning-and-task-breakdown/SKILL.md) | Dividir una especificación en tareas |
+| [incremental-implementation](../skills/incremental-implementation/SKILL.md) | Implementar por incrementos verificables |
+| [test-driven-development](../skills/test-driven-development/SKILL.md) | Trabajar con el ciclo red-green-refactor |
+| [debugging-and-error-recovery](../skills/debugging-and-error-recovery/SKILL.md) | Diagnosticar fallas y recuperar el flujo |
+| [code-review-and-quality](../skills/code-review-and-quality/SKILL.md) | Revisar corrección, claridad, arquitectura, seguridad y rendimiento |
+| [code-simplification](../skills/code-simplification/SKILL.md) | Simplificar preservando comportamiento |
+| [doubt-driven-development](../skills/doubt-driven-development/SKILL.md) | Contrastar decisiones mediante una revisión adversarial independiente |
+| [constraint-driven-development](../skills/constraint-driven-development/SKILL.md) | Definir y comprobar el estándar de calidad del proyecto |
+| [frontend-ui-engineering](../skills/frontend-ui-engineering/SKILL.md) | Construir interfaces accesibles y adaptables |
+| [api-and-interface-design](../skills/api-and-interface-design/SKILL.md) | Diseñar contratos de API e interfaces |
+| [browser-testing-with-devtools](../skills/browser-testing-with-devtools/SKILL.md) | Verificar interfaces mediante Chrome DevTools MCP |
+| [performance-optimization](../skills/performance-optimization/SKILL.md) | Medir y mejorar rendimiento |
+| [security-and-hardening](../skills/security-and-hardening/SKILL.md) | Revisar y reforzar seguridad |
+| [observability-and-instrumentation](../skills/observability-and-instrumentation/SKILL.md) | Diseñar logs, métricas y alertas |
+| [git-workflow-and-versioning](../skills/git-workflow-and-versioning/SKILL.md) | Gestionar ramas, commits y versiones |
+| [ci-cd-and-automation](../skills/ci-cd-and-automation/SKILL.md) | Configurar automatización y pipelines |
+| [shipping-and-launch](../skills/shipping-and-launch/SKILL.md) | Preparar despliegues y lanzamientos |
+| [deprecation-and-migration](../skills/deprecation-and-migration/SKILL.md) | Migrar y retirar sistemas con compatibilidad |
+| [context-engineering](../skills/context-engineering/SKILL.md) | Preparar el contexto de trabajo del agente |
+| [source-driven-development](../skills/source-driven-development/SKILL.md) | Verificar decisiones contra documentación primaria |
+| [documentation-and-adrs](../skills/documentation-and-adrs/SKILL.md) | Escribir documentación y decisiones de arquitectura |
+
+Las skills propias del flujo principal mantienen su lugar. Las importadas ofrecen otros procesos con nombres distintos; no sustituyen `code-review`, `tdd`, `diff-minimality` ni las revisiones especializadas.
+
 ## Procedencia
 
-La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36 y `review-comments` a 37. `.skill-lock.json` conserva repositorios y hashes de la instalación original:
+La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36, `review-comments` a 37 y las 25 de Addy Osmani a 62. `.skill-lock.json` conserva repositorios y hashes de las importaciones:
 
 - `mattpocock/skills`: colección de ingeniería, incluida la base original de `code-review`.
 - `vercel-labs/agent-skills`: composición React, guidelines de diseño y escritura.
 - `vercel-labs/skills`: `find-skills`.
 - `anthropics/skills`: `skill-creator`; conserva su licencia incluida.
+- `addyosmani/agent-skills`: 25 skills de ingeniería; `sourceRef` fija el commit importado y `skillFolderHash` registra el árbol Git original de cada skill, antes de añadir la copia local de la licencia.
 
 `diff-minimality` no tenía entrada de origen en el lock. Las adaptaciones locales no se actualizan automáticamente desde sus fuentes. Mantén licencias y atribuciones originales cuando traslades una carpeta.
