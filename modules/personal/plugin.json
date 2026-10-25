@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "personal",
+  "version": "1.0.0",
+  "description": "Skills propias y variantes mantenidas en esta colección.",
+  "author": {
+    "name": "Adolfo Villalobos"
+  }
+}

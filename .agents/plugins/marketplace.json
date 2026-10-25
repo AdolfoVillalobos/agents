@@ -1,0 +1,68 @@
+{
+  "name": "work-skills",
+  "interface": {
+    "displayName": "Skills de trabajo"
+  },
+  "plugins": [
+    {
+      "name": "personal",
+      "source": {
+        "source": "local",
+        "path": "./modules/personal"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "matt-pocock",
+      "source": {
+        "source": "local",
+        "path": "./modules/matt-pocock"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "addyosmani",
+      "source": {
+        "source": "local",
+        "path": "./modules/addyosmani"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "vercel",
+      "source": {
+        "source": "local",
+        "path": "./modules/vercel"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "anthropic",
+      "source": {
+        "source": "local",
+        "path": "./modules/anthropic"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

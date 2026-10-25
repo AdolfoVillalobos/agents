@@ -2,82 +2,68 @@
 
 ## Contrato común
 
-Cada skill se distribuye como una carpeta con `SKILL.md`, frontmatter `name` y `description`, y sus recursos relativos. Es el formato [Agent Skills](https://agentskills.io/specification). El contenido portable no depende de una marca de modelo ni de nombres de herramientas de un runtime.
+Cada módulo se distribuye como un plugin con `skills/<nombre>/SKILL.md` y sus recursos. La fuente del repo es `modules/<módulo>/skills/<nombre>/SKILL.md`. El frontmatter conserva el `name` original; el plugin aporta el namespace público `<módulo>:<nombre>`.
 
-`agents/openai.yaml` es un complemento opcional de Codex. Las instrucciones necesarias para ejecutar una skill viven en `SKILL.md`, de modo que otro agente pueda ignorar ese YAML. Tampoco usamos interpolación de comandos o variables exclusivas de Claude en el núcleo de las tres skills principales.
+`plugin.json` declara la identidad portable del módulo. `.claude-plugin/plugin.json` es su adaptador para Claude Code. `.agents/plugins/marketplace.json` y `.claude-plugin/marketplace.json` describen las mismas cinco colecciones para cada cliente. Las instrucciones necesarias viven en las skills, no en los adaptadores. `agents/openai.yaml`, cuando existe dentro de una skill, sigue siendo metadato opcional de Codex.
 
-Portabilidad del formato no garantiza idéntico comportamiento ni descubrimiento automático. Un agente necesita poder leer archivos y, para trabajar sobre repositorios, inspeccionar Git. La publicación requiere además una integración con el proveedor de PRs.
+Agrupamos por mantenedor: las propias y adaptadas están en `personal`, y las demás en `matt-pocock`, `addyosmani`, `vercel` y `anthropic`. `.skill-lock.json` distingue el módulo actual de la procedencia original. Sus claves usan nombres cualificados; `localPath` apunta al repo y `skillPath` conserva la ruta del origen.
 
-Las skills `review-design`, `review-qa`, `review-readiness` y `review-comments` se distribuyen con esta colección. Las tres primeras comparten recursos en `skills/code-review/references/` mediante rutas relativas. `review-readiness` también consulta `skills/create-pr/SKILL.md` cuando redacta una descripción. `review-comments` consulta ese mismo protocolo y, si todavía no hay hallazgos, la skill del pase que corresponda. También trae `references/github-posting.md`, que se lee solo al publicar en GitHub. Para trasladarlas, conserva esas carpetas hermanas. Copiar solo `review-comments` deja el protocolo sin resolver. No requieren adaptadores ni subagentes. Esto describe su estructura, no una validación de comportamiento en Claude o Codex.
+El namespace de plugin está documentado por [OpenAI](https://developers.openai.com/plugins/build/plugins) y [Claude Code](https://code.claude.com/docs/en/plugin-marketplaces). Cambiar el directorio o insertar dos puntos en el `name` de una skill suelta no crea esa identidad de plugin.
 
 ## Usar desde cualquier agente
 
-La entrada explícita evita ambigüedad sobre qué versión estás probando:
+Invoca el nombre cualificado en el cliente o pide una ruta explícita para probar una versión concreta:
 
 ```text
-Lee skills/code-review/SKILL.md de este checkout y úsala para revisar
-el repositorio <ruta>, comparando <base> con <head>.
+Lee modules/personal/skills/code-review/SKILL.md de este checkout
+para revisar el repositorio <ruta>, comparando <base> con <head>.
 ```
 
-Para editar la skill en Conductor:
+Claude Code expone `/personal:code-review`. En Codex, selecciona `personal:code-review` en el menú de skills. Otro agente puede leer el módulo completo si admite Agent Skills, aunque su mecanismo de invocación puede variar. Compatibilidad del formato no garantiza comportamiento idéntico entre modelos.
 
-```text
-Edita skills/code-review/SKILL.md de este workspace para mejorar <criterio>.
-Lee AGENTS.md. Compara el comportamiento anterior y propuesto sobre <caso>.
-```
+Las skills de revisión de `personal` comparten el protocolo y la rúbrica de `skills/code-review/references/` dentro de ese módulo. `review-readiness` y `review-comments` también consultan `create-pr`. Traslada el módulo completo para conservar esos recursos hermanos.
 
-## Descubrimiento por herramienta
+## Instalación
 
-| Herramienta | Instalación | Invocación |
-| --- | --- | --- |
-| Codex | `~/.agents/skills/<nombre>` para uso personal; `.agents/skills/<nombre>` dentro de un proyecto | `$code-review` o ruta explícita |
-| Claude Code | `~/.claude/skills/<nombre>` para uso personal; `.claude/skills/<nombre>` dentro de un proyecto | `/code-review` o ruta explícita |
-| Otro agente | Su directorio compatible con Agent Skills, o adjuntar `SKILL.md` y sus referencias | Según su mecanismo; la ruta explícita sirve si puede leer archivos |
+1. Ejecuta `make install` desde el checkout principal. Localízalo con `git worktree list`; el instalador rechaza los worktrees temporales.
+2. Abre una sesión nueva del agente para cargar los módulos.
 
-Fuentes: [Codex](https://learn.chatgpt.com/es-419/docs/build-skills), [Claude Code](https://code.claude.com/docs/en/skills). Rutas verificadas el 2026-09-14.
+Requiere Python 3, `jq` y al menos un CLI disponible con soporte de plugins. Para Codex usa `codex plugin marketplace add` y `codex plugin add`. Para Claude Code usa `claude plugin marketplace add` y `claude plugin install`. El marketplace local se llama `work-skills`. Cada ejecución refresca los paquetes desde este checkout, sin volver a descargar las colecciones de origen.
 
-### Instalación
+El instalador no crea la exportación plana en `~/.agents/skills` o `~/.claude/skills`. Los clientes administran las copias instaladas en sus propios caches de plugins. Después de editar el repo, repite el instalador para refrescarlas.
 
-Corre `make install` (o `./install.sh`) desde el checkout principal; localízalo con `git worktree list`. El instalador se niega a correr desde un worktree temporal. En esta máquina el checkout principal sigue en `~/.agents`.
+### Migración de instalaciones anteriores
 
-Se comparte la carpeta completa:
+Después de registrar todos los módulos correctamente, mueve los accesos planos reconocidos a `~/.agents/backups/install-…`. Reconoce enlaces al antiguo `skills/` de este checkout o de otro checkout con el mismo `origin`, y los enlaces a la copia estable de Addy Osmani creada antes de los módulos. Conserva las skills ajenas, los enlaces rotos ajenos y los recursos sin seguimiento como `synced/`. Los directorios de origen permanecen intactos.
 
-```text
-~/.claude/skills -> ~/.agents/skills -> <checkout principal>/skills
-```
+Un enlace de carpeta que pertenecía a esta colección se respalda completo. Los hijos ajenos se conservan accesibles mediante enlaces individuales. Si un cliente falla al instalar, los accesos planos siguen disponibles. Los registros nativos ya aceptados y la configuración preparada pueden haber cambiado; corrige la falla y repite el instalador. No hay una transacción común entre los dos clientes.
 
-Cuando el checkout principal es `~/.agents`, su carpeta `skills` ya es el destino real: se conserva y solo Claude necesita el enlace. Las skills nuevas quedan disponibles en ambas rutas sin reinstalar ni crear enlaces individuales. También se conservan archivos sin seguimiento, como `skills/synced/`.
+Si ya existe otro marketplace `work-skills` con un origen distinto, el instalador se detiene antes de cambiar la configuración. No sustituye ese registro ni sus plugins. Si corresponde a otro checkout con el mismo `origin`, respalda los registros y vuelve a registrar la colección desde el checkout actual.
 
-El instalador acepta una carpeta real o un enlace que ya resuelva a esta colección. Si encuentra otra colección o un enlace roto, se detiene antes de modificar la configuración: primero hay que integrar esas skills. No elimina carpetas ni sustituye silenciosamente sus destinos. En esta máquina, `plan-project` y `review-pr` siguen conservadas en la carpeta antigua de `claude-config`; no se incorporan automáticamente a la colección compartida.
+### ADHD y RTK
 
-| Qué | Claude Code | Codex |
-| --- | --- | --- |
-| Skills | Un enlace de carpeta a `~/.agents/skills` | Carpeta real del checkout o un enlace a `skills/` |
-| `i-have-adhd` siempre activo | `SessionStart` carga las reglas; `UserPromptSubmit` refresca un recordatorio breve | Bloque entre marcadores en `~/.codex/AGENTS.md` |
-| RTK | `brew install rtk` si falta; `rtk init -g --auto-patch` | `rtk init -g --codex` |
+`personal:i-have-adhd` conserva el modo siempre activo: Claude carga las reglas con `SessionStart` y un recordatorio breve con `UserPromptSubmit`; Codex recibe el bloque delimitado en su `AGENTS.md`. Los hooks leen la skill en `modules/personal/skills/i-have-adhd/`. En una sesión, «stop adhd mode» lo desactiva.
 
-Antes de actualizar configuración, guarda una copia en `~/.agents/backups/install-…`. Los respaldos y `skills/synced/` están excluidos de Git. Conserva los demás ajustes y hooks, incluidos los de RTK. Retira invocaciones simples de `i-have-adhd-always-on.sh` y `adhd-ruleset-reminder.sh`, directamente o mediante `sh`/`bash`, con rutas sin comillas o entre comillas simples o dobles. Si un hook combina ADHD con otros comandos, redirecciones o una sintaxis no reconocida, se detiene sin modificar la configuración: hay que separar la invocación ADHD en su propio hook. También rechaza JSON inválido o un bloque de Codex incompleto antes de escribir cambios.
+`make adhd-on-demand` retira los hooks ADHD conocidos y el bloque de Codex. La skill continúa disponible por su nombre cualificado. `make install-no-rtk` omite la instalación y configuración de RTK. Los cambios en el contenido copiado al `AGENTS.md` de Codex requieren repetir el instalador.
 
-`make adhd-on-demand` retira los hooks ADHD conocidos y el bloque de Codex; la skill sigue disponible bajo demanda. En una sesión, «stop adhd mode» lo apaga. `make install-no-rtk` omite la instalación y configuración de RTK. Los cambios de contenido en `i-have-adhd` requieren repetir el instalador para refrescar el bloque copiado de Codex.
+Antes de escribir, el instalador respalda la configuración. Conserva otros ajustes y hooks, incluidos los de RTK. Migra invocaciones simples de los scripts ADHD, incluso con comillas o mediante `sh` o `bash`. Si un hook combina ADHD con otros comandos, se detiene sin modificar la configuración: separa la invocación ADHD. También rechaza JSON inválido y bloques incompletos de Codex antes de escribir.
 
-El recordatorio de Claude se extrae de `Turn reminder` en `skills/i-have-adhd/SKILL.md` en cada mensaje. Refuerza el alcance de la pregunta actual sin repetir las reglas completas ni reactivar el modo después de «stop adhd mode». Que un hook entregue las instrucciones demuestra su carga, no garantiza que el modelo las siga: revisa también la respuesta. Los [casos de evaluación](../skills/i-have-adhd/evaluacion.md) separan ambas comprobaciones.
+La bandera `~/.claude/.i-have-adhd-always` del plugin anterior se mueve al respaldo; el plugin permanece instalado. Esto evita inyecciones duplicadas. El recordatorio se extrae de `Turn reminder` en cada mensaje y no reactiva un modo desactivado. Que se cargue una instrucción no garantiza que el modelo la siga; revisa también los [casos de evaluación](../modules/personal/skills/i-have-adhd/evaluacion.md).
 
-Si el plugin anterior de ADHD tiene la bandera `~/.claude/.i-have-adhd-always`, el instalador la mueve al respaldo después de escribir la configuración. El plugin se conserva; su inyección automática queda desactivada para que esta colección controle ADHD sin duplicarlo, también al elegir el modo bajo demanda.
+### Validación aislada
 
-`make test-install` prueba el script en repositorios y configuraciones temporales. Para esa prueba, `AGENT_INSTALL_ROOT` redirige las tres carpetas de configuración y exige `--skip-rtk`, porque RTK gestiona sus propias rutas globales. Acepta rutas absolutas o relativas al directorio desde el que se ejecuta; los enlaces siempre usan destinos absolutos. No cambia `HOME` ni usa tus configuraciones reales. La suite verifica enlaces, preservación de skills y configuración, migración de hooks con comillas, rechazo de comandos compuestos sin cambios parciales, reinstalación y errores de entrada; no ejecuta los modelos ni instala RTK.
+`make test-install` usa configuraciones y repos temporales con dobles de los CLI. Verifica registro, reinstalación, respaldos, conservación de recursos ajenos, rechazo de configuración inválida y fallas parciales. `AGENT_INSTALL_ROOT` redirige las carpetas de configuración y exige `--skip-rtk`. No modifica `HOME`, no instala RTK ni ejecuta modelos.
 
-Incorporar cambios al checkout principal actualiza los archivos que leen ambos agentes. Abre una sesión nueva para comprobar su descubrimiento; una sesión existente puede conservar instrucciones previas.
+La validación con los CLI reales se realiza por separado: manifests aceptados, paquetes instalados e inventario de skills. No equivale a evaluar los workflows con modelos. En Conductor, usa una ruta de este workspace para probar un draft; el cache global puede contener otra revisión.
 
-### Review en GitHub
+## Review en GitHub
 
-El workflow de review corre Codex con `openai/codex-action` y el perfil `:read-only`. Copia `skills/code-review/SKILL.md` de la revisión base del PR, hace las pasadas en secuencia y publica la revisión en español. Las modificaciones de esa skill dentro del PR son contenido a revisar; el workflow no las usa como sus propias instrucciones. Codex no comenta ni escribe en el repositorio: un job posterior publica la revisión completa como un solo comentario. Hace falta el secreto `OPENAI_API_KEY`. Conservamos también el workflow que responde a menciones `@claude`.
-
-En Conductor, el directorio de trabajo es otra copia de Git. Invoca la ruta de ese workspace para probar un draft: una skill descubierta globalmente puede seguir leyendo la versión del checkout principal.
+El workflow usa la skill `personal:code-review` fijada a la revisión base del PR, nunca las instrucciones modificadas por el propio PR. Busca primero `modules/personal/skills/code-review/SKILL.md` y recurre a la antigua `skills/code-review/SKILL.md` cuando la base todavía no contiene la migración. Las pasadas son secuenciales y un job posterior publica el resultado en español. Requiere `OPENAI_API_KEY`.
 
 ## Skills importadas
 
-La colección de [Addy Osmani](addyosmani-agent-skills.md) conserva la estructura original: `skills/<nombre>/` y siete documentos compartidos en `references/`, en la raíz del repo. Las rutas `../../references/…` de cada skill se resuelven contra esa estructura. Los enlaces de carpeta de `install.sh` la conservan; copiar una skill por separado requiere trasladar también sus referencias. Cada skill lleva su licencia MIT y `references/` conserva otra copia para distribuir esos documentos.
+El módulo [addyosmani](addyosmani-agent-skills.md) contiene sus 25 skills y los siete documentos compartidos en `references/` dentro del paquete. Sus rutas `../../references/…` siguen resolviéndose sin modificar los originales. Cada skill y la carpeta compartida conservan la licencia MIT incluida.
 
-Las skills fuera del grupo principal siguen como importadas, sin promesa de portabilidad auditada. Algunas nombran herramientas de Claude, exigen subagentes o dependen del setup de Matt Pocock. Migra una cuando la vayas a usar: conserva el comportamiento útil, elimina dependencias implícitas y prueba la nueva versión.
+Las demás importaciones mantienen su estado de portabilidad pendiente: algunas nombran herramientas o rutas específicas, exigen subagentes o dependen de un setup externo. Migra una cuando la vayas a usar, conserva el comportamiento útil y prueba la adaptación bajo `personal`. Mantén la atribución original.
 
-`.skill-lock.json` registra instalaciones de terceros, no es un manifiesto de esta colección personal. Sus hashes reflejan el contenido importado, no las modificaciones propias. Evita actualizar automáticamente `code-review` desde su origen: ahora es una variante local.
+Los hashes del lock reflejan las importaciones originales, no las adaptaciones. No actualizan automáticamente ninguna variante local.
