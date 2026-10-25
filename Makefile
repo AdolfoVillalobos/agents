@@ -4,7 +4,7 @@
 help: ## Muestra los comandos disponibles
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "  make %-16s %s\n", $$1, $$2}'
 
-install: ## Skills + i-have-adhd siempre activo + RTK (Claude Code y Codex)
+install: ## Módulos de skills + ADHD siempre activo + RTK
 	./install.sh
 
 install-no-rtk: ## Igual que install, sin instalar ni configurar RTK

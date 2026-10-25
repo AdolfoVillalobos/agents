@@ -1,0 +1,36 @@
+{
+  "name": "work-skills",
+  "owner": {
+    "name": "Adolfo Villalobos"
+  },
+  "metadata": {
+    "description": "Colección personal de skills organizada por procedencia."
+  },
+  "plugins": [
+    {
+      "name": "personal",
+      "source": "./modules/personal",
+      "description": "Skills propias y variantes mantenidas en esta colección."
+    },
+    {
+      "name": "matt-pocock",
+      "source": "./modules/matt-pocock",
+      "description": "Skills de ingeniería importadas de Matt Pocock."
+    },
+    {
+      "name": "addyosmani",
+      "source": "./modules/addyosmani",
+      "description": "Workflows de ingeniería importados de Addy Osmani."
+    },
+    {
+      "name": "vercel",
+      "source": "./modules/vercel",
+      "description": "Skills de composición, escritura y descubrimiento de Vercel."
+    },
+    {
+      "name": "anthropic",
+      "source": "./modules/anthropic",
+      "description": "Herramientas para crear y evaluar skills, importadas de Anthropic."
+    }
+  ]
+}

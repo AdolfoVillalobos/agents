@@ -1,32 +1,24 @@
-# Skills de Addy Osmani
+# Módulo addyosmani
 
 ## Usar en este y otros dispositivos
 
-1. Incorpora esta importación al checkout principal del repo y sincronízalo en el otro dispositivo.
-2. Desde ese checkout, ejecuta `make install`. Usa `make install-no-rtk` para omitir RTK. El instalador requiere `jq` y se detiene si encuentra otra colección en los destinos; [detalles y conservación de instalaciones existentes](portability.md#instalación).
-3. Abre una sesión nueva del agente. Prueba `$spec-driven-development` en Codex o `/spec-driven-development` en Claude Code.
+1. Sincroniza esta versión del repo y ejecuta `make install` desde su checkout principal. `make install-no-rtk` omite RTK.
+2. Abre una sesión nueva. En Claude Code, prueba `/addyosmani:spec-driven-development`. En Codex, selecciona `addyosmani:spec-driven-development` en el menú de skills.
 
-Para usar esta versión explícitamente en un workspace, pide:
+El plugin registra las 25 skills bajo `addyosmani:<nombre>`. También puedes pedir que el agente lea `modules/addyosmani/skills/spec-driven-development/SKILL.md` de este checkout. [Catálogo completo](catalog.md#colección-de-addy-osmani) y [opciones de instalación](portability.md#instalación).
 
-```text
-Lee skills/spec-driven-development/SKILL.md de este checkout
-y úsala para especificar <cambio>.
-```
-
-El repo contiene las 25 skills y sus recursos: después de obtener estos cambios, instalarlas en otro dispositivo no requiere volver a descargar la colección original. [Catálogo completo](catalog.md#colección-de-addy-osmani).
-
-## Procedencia y archivos
+## Procedencia y recursos
 
 - Origen: [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills).
 - Versión importada: [`aeac41d4d005999432bb7312f7ff06383a91d59d`](https://github.com/addyosmani/agent-skills/commit/aeac41d4d005999432bb7312f7ff06383a91d59d).
-- Las carpetas `skills/<nombre>/` conservan el contenido original, incluidos scripts y referencias internas. Cada una añade `LICENSE.txt`, con la licencia MIT original de Addy Osmani.
-- Los siete documentos de `references/` conservan su ubicación relativa a `skills/` y su propia copia de la licencia. Traslada ambas carpetas juntas; copiar solo `SKILL.md` pierde recursos.
-- `.skill-lock.json` registra el origen, commit y árbol Git original de cada skill. El hash representa la carpeta de origen antes de añadir `LICENSE.txt`; no es una comprobación de todas las adaptaciones locales ni habilita actualizaciones automáticas.
+- `modules/addyosmani/skills/` conserva el contenido original, incluidos nombres, scripts y referencias internas. Cada skill añade la licencia MIT original en `LICENSE.txt`.
+- Los siete documentos compartidos viven en `modules/addyosmani/references/`. Viajan dentro del plugin y conservan sus rutas relativas y otra copia de la licencia.
+- `.skill-lock.json` usa claves `addyosmani:<nombre>`. Registra el commit de origen, su ruta original y la ruta local. `skillFolderHash` representa el árbol Git original, antes de añadir la copia local de la licencia.
 
-## Alcance de la importación
+## Alcance
 
-Se instalan las skills y sus referencias. Los comandos `/spec`, `/build` o `/ship`, hooks y personas del plugin original requieren su integración nativa; no se registran aquí. Invoca las skills por sus nombres completos. `doubt-driven-development` puede usar un subagente genérico según sus propias instrucciones; la colección no registra las personas opcionales mencionadas en `agents/`.
+El módulo incluye las skills y sus referencias. Los comandos abreviados `/spec`, `/build` o `/ship`, hooks y personas del plugin original requieren aquella integración; no se registran aquí. Invoca los nombres cualificados completos. `doubt-driven-development` permite un subagente genérico según sus instrucciones, sin registrar sus personas opcionales de `agents/`.
 
-Las instrucciones originales siguen como importadas: algunas dependen de herramientas concretas, solicitan aprobación o requieren subagentes. `browser-testing-with-devtools` requiere Chrome DevTools MCP. El inicializador opcional de `idea-refine` se invoca mediante la ruta real de su `scripts/idea-refine.sh`, desde el proyecto donde quieras crear `docs/ideas/`.
+Las instrucciones conservan su estado importado: algunas requieren herramientas concretas o subagentes. `browser-testing-with-devtools` requiere Chrome DevTools MCP. El inicializador opcional de `idea-refine` se invoca con la ruta real de su script desde el proyecto donde quieras crear `docs/ideas/`.
 
-Esta incorporación conserva las instrucciones de origen. Las comprobaciones de formato, integridad de archivos, rutas de recursos e instalación aislada no equivalen a ejecutar los workflows con modelos ni a validar comportamiento entre proveedores.
+La comprobación de instalación, integridad e inventario de skills no equivale a ejecutar sus workflows con modelos ni a validar su comportamiento entre proveedores.

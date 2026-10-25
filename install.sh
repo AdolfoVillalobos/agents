@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Instala la colección compartida, ADHD siempre activo y RTK.
+# Instala los módulos de skills, ADHD siempre activo y RTK.
 # AGENT_INSTALL_ROOT permite probar en una raíz aislada; requiere --skip-rtk.
 set -euo pipefail
 umask 077
@@ -38,20 +38,9 @@ if [ "$(git -C "$REPO" rev-parse --path-format=absolute --git-dir)" != "$(git -C
   exit 1
 fi
 command -v jq >/dev/null || { echo "Falta jq (brew install jq)." >&2; exit 1; }
-
-# Acepta la carpeta real del repo o enlaces que ya resuelven a ella. Nunca oculta
-# una colección distinta, incluidas skills sincronizadas o sin seguimiento en Git.
-check_skill_path() {
-  local path=$1
-  if [ -e "$path" ] || [ -L "$path" ]; then
-    if ! [ "$path" -ef "$REPO/skills" ]; then
-      echo "Conservado $path: contiene o apunta a otra colección. Integra sus skills antes de cambiar el enlace." >&2
-      return 1
-    fi
-  fi
-}
-check_skill_path "$AGENTS_DIR/skills"
-check_skill_path "$CLAUDE_DIR/skills"
+command -v python3 >/dev/null || { echo "Falta Python 3." >&2; exit 1; }
+module_args=(--repo "$REPO" --agents-dir "$AGENTS_DIR" --claude-dir "$CLAUDE_DIR" --codex-dir "$CODEX_DIR")
+python3 "$REPO/scripts/install_modules.py" "${module_args[@]}" --check
 
 settings="$CLAUDE_DIR/settings.json"
 agents_md="$CODEX_DIR/AGENTS.md"
@@ -114,30 +103,28 @@ fi
 mkdir -p "$AGENTS_DIR/backups"
 backup=$(mktemp -d "$AGENTS_DIR/backups/install-$(date +%Y%m%d-%H%M%S)-XXXXXX")
 mkdir -p "$backup/claude" "$backup/codex"
-for file in settings.json CLAUDE.md; do
-  [ ! -f "$CLAUDE_DIR/$file" ] || cp -p "$CLAUDE_DIR/$file" "$backup/claude/$file"
+for file in settings.json CLAUDE.md plugins/known_marketplaces.json plugins/installed_plugins.json; do
+  if [ -f "$CLAUDE_DIR/$file" ]; then
+    mkdir -p "$(dirname "$backup/claude/$file")"
+    cp -p "$CLAUDE_DIR/$file" "$backup/claude/$file"
+  fi
 done
 for file in AGENTS.md hooks.json config.toml; do
   [ ! -f "$CODEX_DIR/$file" ] || cp -p "$CODEX_DIR/$file" "$backup/codex/$file"
 done
 
 mkdir -p "$CLAUDE_DIR" "$CODEX_DIR" "$AGENTS_DIR"
-# Un único enlace de carpeta por consumidor; la carpeta real del repo se conserva.
-if [ ! -e "$AGENTS_DIR/skills" ]; then
-  ln -s "$REPO/skills" "$AGENTS_DIR/skills"
-fi
-if [ ! -e "$CLAUDE_DIR/skills" ]; then
-  ln -s "$AGENTS_DIR/skills" "$CLAUDE_DIR/skills"
-fi
 # Escribe a través de enlaces de configuración existentes sin reemplazarlos.
 cat "$settings_tmp" >"$settings"
 cat "$agents_tmp" >"$agents_md"
+# Los clientes conservan sus demás plugins y actualizan su propia configuración.
+python3 "$REPO/scripts/install_modules.py" "${module_args[@]}" --backup "$backup"
 # El plugin anterior usa esta bandera para inyectar ADHD además de nuestro hook.
 # Consérvala en el respaldo: la activación pasa a esta colección compartida.
 if [ -f "$CLAUDE_DIR/.i-have-adhd-always" ]; then
   mv "$CLAUDE_DIR/.i-have-adhd-always" "$backup/claude/.i-have-adhd-always"
 fi
-echo "Skills compartidas. Respaldo: $backup"
+echo "Skills por módulo. Respaldo: $backup"
 if [ "$adhd_always_on" = 1 ]; then
   echo "i-have-adhd: siempre activo, sin duplicar hooks conocidos"
 else
