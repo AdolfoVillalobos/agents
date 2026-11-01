@@ -10,6 +10,10 @@ Agrupamos por mantenedor: las propias y adaptadas están en `personal`, y las de
 
 El namespace de plugin está documentado por [OpenAI](https://developers.openai.com/plugins/build/plugins) y [Claude Code](https://code.claude.com/docs/en/plugin-marketplaces). Cambiar el directorio o insertar dos puntos en el `name` de una skill suelta no crea esa identidad de plugin.
 
+La identidad del plugin y la etiqueta del menú son campos distintos. En Matt Pocock, `agents/openai.yaml` declara `interface.display_name` con el nombre cualificado, por ejemplo `matt-pocock:wayfinder`; así la etiqueta también identifica la colección. Es un ajuste local de presentación del adaptador, sin cambios en los nombres internos ni en las instrucciones importadas. Addy Osmani no declara estas etiquetas personalizadas. [Referencia del campo](https://developers.openai.com/plugins/deploy/submission-errors#skill-agent-metadata-errors).
+
+Caso de comprobación: después de reinstalar desde el checkout principal y abrir una sesión nueva, buscar `wayfinder` y `prototype` en el selector. Las entradas de este módulo deben mostrar `matt-pocock:wayfinder` y `matt-pocock:prototype`. La colección externa `matt-skills-curated` puede ofrecer otras entradas con etiquetas sin prefijo; este cambio no modifica ese plugin. La comprobación de los YAML es estructural; la verificación visual en el cliente queda pendiente.
+
 ## Usar desde cualquier agente
 
 Invoca el nombre cualificado en el cliente o pide una ruta explícita para probar una versión concreta:
