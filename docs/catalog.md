@@ -5,7 +5,7 @@ Cada nombre público incluye el módulo que mantiene la skill. El nombre interno
 | Módulo | Skills | Criterio |
 | --- | --- | --- |
 | `personal` | 8 | Propias y adaptadas localmente |
-| `matt-pocock` | 24 | Importadas de Matt Pocock |
+| `matt-pocock` | 28 | Importadas de Matt Pocock |
 | `addyosmani` | 25 | Importadas de Addy Osmani |
 | `vercel` | 4 | Importadas de Vercel |
 | `anthropic` | 1 | Importada de Anthropic |
@@ -72,9 +72,11 @@ Los grupos temáticos siguientes son navegación. Los directorios corresponden a
 | Skill | Uso |
 | --- | --- |
 | [matt-pocock:implement](../modules/matt-pocock/skills/implement/SKILL.md) | Ejecutar una especificación |
+| [matt-pocock:implement-spec](../modules/matt-pocock/skills/implement-spec/SKILL.md) | Ejecutar todos los tickets de una spec con subagentes en paralelo |
 | [matt-pocock:tdd](../modules/matt-pocock/skills/tdd/SKILL.md) | Desarrollo guiado por tests |
 | [matt-pocock:diagnosing-bugs](../modules/matt-pocock/skills/diagnosing-bugs/SKILL.md) | Diagnóstico de bugs |
-| [matt-pocock:resolving-merge-conflicts](../modules/matt-pocock/skills/resolving-merge-conflicts/SKILL.md) | Resolver conflictos por intención |
+| [matt-pocock:code-review](../modules/matt-pocock/skills/code-review/SKILL.md) | Revisar cambios contra los standards del repo y la spec; `personal:code-review` es la variante mantenida aquí |
+| [matt-pocock:resolving-merge-conflicts](../modules/matt-pocock/skills/resolving-merge-conflicts/SKILL.md) | Resolver conflictos por intención; retirada en upstream y conservada aquí |
 | [vercel:vercel-composition-patterns](../modules/vercel/skills/vercel-composition-patterns/SKILL.md) | Composición de componentes React |
 
 ### Coordinación del trabajo
@@ -86,6 +88,8 @@ Los grupos temáticos siguientes son navegación. Los directorios corresponden a
 | [matt-pocock:wayfinder](../modules/matt-pocock/skills/wayfinder/SKILL.md) | Navegar proyectos largos |
 | [matt-pocock:handoff](../modules/matt-pocock/skills/handoff/SKILL.md) | Transferir contexto entre sesiones |
 | [matt-pocock:wizard](../modules/matt-pocock/skills/wizard/SKILL.md) | Guiar pasos manuales |
+| [matt-pocock:pr](../modules/matt-pocock/skills/pr/SKILL.md) | Redactar el cuerpo de un PR |
+| [matt-pocock:retro](../modules/matt-pocock/skills/retro/SKILL.md) | Retrospectiva de una sesión de código |
 
 ### Investigación, aprendizaje y escritura
 
