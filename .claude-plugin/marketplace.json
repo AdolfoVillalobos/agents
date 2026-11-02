@@ -31,6 +31,11 @@
       "name": "anthropic",
       "source": "./modules/anthropic",
       "description": "Herramientas para crear y evaluar skills, importadas de Anthropic."
+    },
+    {
+      "name": "humanlayer",
+      "source": "./modules/humanlayer",
+      "description": "Visualización de conversaciones con diagramas y artefactos HTML, importada de HumanLayer."
     }
   ]
 }
