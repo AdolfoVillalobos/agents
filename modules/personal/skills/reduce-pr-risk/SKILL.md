@@ -45,3 +45,14 @@ Write in the user's language. Lead with the recommendation, then:
 4. **Gaps**: inputs you could not read.
 
 Keep it short enough to act on. Skip axes that are clearly `low` after one line.
+
+## 5. Request a new risk review
+
+The risk engine reviews a PR again only when a new commit reaches it. A change limited to the PR description does not trigger it. After the risk-lowering changes are in place, request the new review with an empty amend of the last commit and a force push:
+
+```bash
+git commit --amend --no-edit
+git push --force-with-lease
+```
+
+Include these steps in the report whenever an alternative changes only the description. Run them only when the user asks: the force push rewrites the PR's head commit.

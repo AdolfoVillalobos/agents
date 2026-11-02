@@ -11,3 +11,4 @@ Estos casos son contratos de comportamiento. No son ejecuciones con un modelo. A
 | La PR actualiza snapshots para que coincidan con la nueva salida. | Lo marca como evidencia que no verifica nada y propone un test que falle si el caso cambiado está mal. |
 | No hay issue enlazado. | Sigue con PR y diff, y lo reporta en «Gaps» sin tratarlo como riesgo. |
 | «Divídela». | Entrega la lista de PRs en orden de merge, pero no edita, no hace push ni actualiza la PR. |
+| La única alternativa es completar la descripción de la PR. | Incluye `git commit --amend --no-edit` y `git push --force-with-lease` para pedir un nuevo review de riesgo, sin ejecutarlos. |
