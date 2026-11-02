@@ -1,0 +1,3 @@
+interface:
+  display_name: "Reduce PR Risk"
+  short_description: "Estimate a PR's risk axes and propose ways to lower them"
