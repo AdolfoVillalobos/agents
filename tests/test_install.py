@@ -61,7 +61,7 @@ class InstallTests(unittest.TestCase):
             base = self.config / client / "plugins/cache/work-skills"
             self.assertTrue((base / "personal/1.0.0/skills/code-review/SKILL.md").is_file())
             self.assertTrue((base / "matt-pocock/1.0.0/skills/tdd/SKILL.md").is_file())
-            self.assertEqual(len(list(base.glob("*/1.0.0/skills/*/SKILL.md"))), 67)
+            self.assertEqual(len(list(base.glob("*/1.0.0/skills/*/SKILL.md"))), 68)
             self.assertFalse((self.config / client / "skills").exists())
         settings = self.config / ".claude/settings.json"
         before = settings.read_bytes()

@@ -4,7 +4,7 @@ Cada nombre público incluye el módulo que mantiene la skill. El nombre interno
 
 | Módulo | Skills | Criterio |
 | --- | --- | --- |
-| `personal` | 8 | Propias y adaptadas localmente |
+| `personal` | 9 | Propias y adaptadas localmente |
 | `matt-pocock` | 28 | Importadas de Matt Pocock |
 | `addyosmani` | 25 | Importadas de Addy Osmani |
 | `vercel` | 4 | Importadas de Vercel |
@@ -31,6 +31,7 @@ Estas tres usan instrucciones independientes del proveedor. `create-pr` incluye 
 | [personal:review-qa](../modules/personal/skills/review-qa/SKILL.md) | Buscar regresiones recorriendo flujos y ejecutando comprobaciones focalizadas | Draft propio a partir del prompt B aportado por el usuario |
 | [personal:review-readiness](../modules/personal/skills/review-readiness/SKILL.md) | Evaluar intención, despliegue, compatibilidad y preparación para merge | Draft propio a partir del prompt C aportado por el usuario |
 | [personal:review-comments](../modules/personal/skills/review-comments/SKILL.md) | Convertir un review ya hecho en comentarios anclados, listos para pegar | Draft propio a partir del paquete `pr-review-assist` y el brief de comentarios aportados el 2026-10-13 |
+| [personal:reduce-pr-risk](../modules/personal/skills/reduce-pr-risk/SKILL.md) | Leer issue, descripción y diff de una PR, estimar qué ejes de riesgo la suben y proponer cómo bajarlo sin sobreingeniería | Draft propio a partir de la explicación del motor de riesgo de Dexter publicada en Slack de Fintoc el 2026-10-31; [casos de evaluación](../modules/personal/skills/reduce-pr-risk/evaluacion.md) |
 
 `review-design`, `review-qa` y `review-readiness` son alternativas para pedir un pase específico. `code-review` conserva la revisión general. `review-comments` formatea los hallazgos que sobrevivieron. Si todavía no hay informe, corre antes el pase que corresponda. Comparten [protocolo y rúbrica](../modules/personal/skills/code-review/references/review-protocol.md), con una [referencia de pagos](../modules/personal/skills/code-review/references/payment-invariants.md) que se lee solo cuando aplica. [Procedencia, adaptaciones y casos de evaluación](review-skills.md). Validación estructural; evaluación con modelos pendiente.
 
@@ -153,7 +154,7 @@ Las skills propias del flujo principal mantienen su lugar. Las importadas ofrece
 
 ## Procedencia
 
-La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36, `review-comments` a 37 las 25 de Addy Osmani a 62 y `show-me` a 63. `.skill-lock.json` usa nombres cualificados y conserva origen, ruta original y ruta local de las importaciones:
+La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36, `review-comments` a 37, las 25 de Addy Osmani a 62, `show-me` a 63 y `reduce-pr-risk` a 64. `.skill-lock.json` usa nombres cualificados y conserva origen, ruta original y ruta local de las importaciones:
 
 - `mattpocock/skills`: colección de ingeniería, incluida la base original de `code-review`.
 - `vercel-labs/agent-skills`: composición React, guidelines de diseño y escritura.
