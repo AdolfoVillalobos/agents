@@ -1,0 +1,8 @@
+{
+  "name": "humanlayer",
+  "version": "1.0.0",
+  "description": "Visualización de conversaciones con diagramas y artefactos HTML, importada de HumanLayer.",
+  "author": {
+    "name": "HumanLayer"
+  }
+}

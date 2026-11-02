@@ -9,6 +9,7 @@ Cada nombre público incluye el módulo que mantiene la skill. El nombre interno
 | `addyosmani` | 25 | Importadas de Addy Osmani |
 | `vercel` | 4 | Importadas de Vercel |
 | `anthropic` | 1 | Importada de Anthropic |
+| `humanlayer` | 1 | Importada de HumanLayer |
 
 [Instalación por módulos](portability.md#instalación).
 
@@ -110,6 +111,12 @@ Los grupos temáticos siguientes son navegación. Los directorios corresponden a
 | [vercel:find-skills](../modules/vercel/skills/find-skills/SKILL.md) | Descubrir skills de terceros |
 | [matt-pocock:setup-matt-pocock-skills](../modules/matt-pocock/skills/setup-matt-pocock-skills/SKILL.md) | Configurar el workflow importado |
 
+### Visualización
+
+| Skill | Uso | Procedencia |
+| --- | --- | --- |
+| [humanlayer:show-me](../modules/humanlayer/skills/show-me/SKILL.md) | Explicar el tema actual con pseudocódigo, árboles, Mermaid, diffs o un HTML enfocado; solo por invocación explícita | [`humanlayer/skills`](https://github.com/humanlayer/skills) en `4d69d20`; conserva licencia MIT en `LICENSE.txt` |
+
 ### Colección de Addy Osmani
 
 Las 25 skills de [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) se importaron desde [`aeac41d`](https://github.com/addyosmani/agent-skills/commit/aeac41d4d005999432bb7312f7ff06383a91d59d). Conservan sus nombres, instrucciones y recursos originales; cada carpeta incluye la licencia MIT de Addy Osmani. Estado: **importadas, sin auditoría de comportamiento ni portabilidad completa**. Las referencias compartidas viven en [`modules/addyosmani/references/`](../modules/addyosmani/references/); traslada el módulo `addyosmani` completo. [Instalación, alcance y comprobaciones](addyosmani-agent-skills.md).
@@ -146,12 +153,13 @@ Las skills propias del flujo principal mantienen su lugar. Las importadas ofrece
 
 ## Procedencia
 
-La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36, `review-comments` a 37 y las 25 de Addy Osmani a 62. `.skill-lock.json` usa nombres cualificados y conserva origen, ruta original y ruta local de las importaciones:
+La colección inicial contiene 31 skills; `create-pr` lleva el total a 32, `i-have-adhd` a 33, las tres revisiones especializadas a 36, `review-comments` a 37 las 25 de Addy Osmani a 62 y `show-me` a 63. `.skill-lock.json` usa nombres cualificados y conserva origen, ruta original y ruta local de las importaciones:
 
 - `mattpocock/skills`: colección de ingeniería, incluida la base original de `code-review`.
 - `vercel-labs/agent-skills`: composición React, guidelines de diseño y escritura.
 - `vercel-labs/skills`: `find-skills`.
 - `anthropics/skills`: `skill-creator`; conserva su licencia incluida.
+- `humanlayer/skills`: `show-me`; `sourceRef` fija el commit importado y se añade la licencia MIT del repo como `LICENSE.txt`.
 - `addyosmani/agent-skills`: 25 skills de ingeniería; `sourceRef` fija el commit importado y `skillFolderHash` registra el árbol Git original de cada skill, antes de añadir la copia local de la licencia.
 
 `diff-minimality` no tenía entrada de origen en el lock. Las adaptaciones locales no se actualizan automáticamente desde sus fuentes. Mantén licencias y atribuciones originales cuando traslades una carpeta.

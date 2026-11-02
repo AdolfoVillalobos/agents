@@ -11,7 +11,7 @@ Instala la colección con `make install` desde el checkout principal. Las skills
 | Preparar un PR entendible | [personal:create-pr](modules/personal/skills/create-pr/SKILL.md) |
 | Dejar comentarios para pegar | [personal:review-comments](modules/personal/skills/review-comments/SKILL.md) |
 
-El [catálogo](docs/catalog.md) reúne las 62 skills de `personal`, `matt-pocock`, `addyosmani`, `vercel` y `anthropic`. Las propias y adaptadas viven en `personal`; cada importación conserva su atribución y licencia incluida.
+El [catálogo](docs/catalog.md) reúne las 63 skills de `personal`, `matt-pocock`, `addyosmani`, `vercel`, `anthropic` y `humanlayer`. Las propias y adaptadas viven en `personal`; cada importación conserva su atribución y licencia incluida.
 
 ## Organización
 

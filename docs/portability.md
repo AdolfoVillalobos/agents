@@ -4,9 +4,9 @@
 
 Cada módulo se distribuye como un plugin con `skills/<nombre>/SKILL.md` y sus recursos. La fuente del repo es `modules/<módulo>/skills/<nombre>/SKILL.md`. El frontmatter conserva el `name` original; el plugin aporta el namespace público `<módulo>:<nombre>`.
 
-`plugin.json` declara la identidad portable del módulo. `.claude-plugin/plugin.json` es su adaptador para Claude Code. `.agents/plugins/marketplace.json` y `.claude-plugin/marketplace.json` describen las mismas cinco colecciones para cada cliente. Las instrucciones necesarias viven en las skills, no en los adaptadores. `agents/openai.yaml`, cuando existe dentro de una skill, sigue siendo metadato opcional de Codex.
+`plugin.json` declara la identidad portable del módulo. `.claude-plugin/plugin.json` es su adaptador para Claude Code. `.agents/plugins/marketplace.json` y `.claude-plugin/marketplace.json` describen las mismas seis colecciones para cada cliente. Las instrucciones necesarias viven en las skills, no en los adaptadores. `agents/openai.yaml`, cuando existe dentro de una skill, sigue siendo metadato opcional de Codex.
 
-Agrupamos por mantenedor: las propias y adaptadas están en `personal`, y las demás en `matt-pocock`, `addyosmani`, `vercel` y `anthropic`. `.skill-lock.json` distingue el módulo actual de la procedencia original. Sus claves usan nombres cualificados; `localPath` apunta al repo y `skillPath` conserva la ruta del origen.
+Agrupamos por mantenedor: las propias y adaptadas están en `personal`, y las demás en `matt-pocock`, `addyosmani`, `vercel`, `anthropic` y `humanlayer`. `.skill-lock.json` distingue el módulo actual de la procedencia original. Sus claves usan nombres cualificados; `localPath` apunta al repo y `skillPath` conserva la ruta del origen.
 
 El namespace de plugin está documentado por [OpenAI](https://developers.openai.com/plugins/build/plugins) y [Claude Code](https://code.claude.com/docs/en/plugin-marketplaces). Cambiar el directorio o insertar dos puntos en el `name` de una skill suelta no crea esa identidad de plugin.
 

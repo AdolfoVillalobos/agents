@@ -61,7 +61,7 @@ class InstallTests(unittest.TestCase):
             base = self.config / client / "plugins/cache/work-skills"
             self.assertTrue((base / "personal/1.0.0/skills/code-review/SKILL.md").is_file())
             self.assertTrue((base / "matt-pocock/1.0.0/skills/tdd/SKILL.md").is_file())
-            self.assertEqual(len(list(base.glob("*/1.0.0/skills/*/SKILL.md"))), 66)
+            self.assertEqual(len(list(base.glob("*/1.0.0/skills/*/SKILL.md"))), 67)
             self.assertFalse((self.config / client / "skills").exists())
         settings = self.config / ".claude/settings.json"
         before = settings.read_bytes()
@@ -73,7 +73,7 @@ class InstallTests(unittest.TestCase):
         for client in (".codex", ".claude"):
             installed = self.config / client / "plugins/cache/work-skills/personal/1.0.0/skills/code-review/SKILL.md"
             self.assertEqual(installed.read_bytes(), source.read_bytes())
-        self.assertEqual(len(json.loads(settings.read_text())["enabledPlugins"]), 5)
+        self.assertEqual(len(json.loads(settings.read_text())["enabledPlugins"]), 6)
 
     def test_main_checkout_in_agents_preserves_real_and_synced_skills(self):
         repo = self.config / ".agents"
