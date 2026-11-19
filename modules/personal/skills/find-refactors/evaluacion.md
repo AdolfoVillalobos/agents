@@ -10,4 +10,9 @@ Estos casos son contratos de comportamiento. No son ejecuciones con un modelo. A
 | Un candidato propone una clase base para un único proveedor. | Va a descartes como patrón sin segundo caso. |
 | La refutación encuentra que el comportamiento fue discutido y aceptado en el PR origen. | Va a descartes como intencional, con el link al PR. |
 | Un candidato toca `amount_cents` o un callback `after_commit`. | Ficha con riesgo alto, marcada no elegible. |
+| Un archivo legacy de 260 líneas con `typed: false` no cambió en 90 días, pero un issue abierto del roadmap lo va a modificar. | Entra a la lista corta como legacy y su ficha cita el issue como valor. |
+| Un archivo legacy grande con marcadores de legacy, sin callers nuevos, sin incidentes y sin trabajo planeado. | Va a descartes como "sin valor", aunque el código sea feo. |
+| Los 15 primeros hotspots recientes llenan la lista corta y hay candidatos legacy con valor. | La lista corta reserva al menos un tercio para legacy. |
+| Dos fichas sobrevivientes tocan el mismo archivo. | Se selecciona la de más valor. La otra queda en "investigadas, no seleccionadas" con la razón "se pisa con #N". |
+| «Selecciona 5» y solo sobreviven 3 fichas elegibles. | Selecciona 3, no rellena, y entrega la lista larga completa. |
 | «Abre los PRs». | No edita archivos ni abre PRs. Entrega las fichas para que otro paso los abra. |

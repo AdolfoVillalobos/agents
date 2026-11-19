@@ -8,6 +8,14 @@ Read this when the repository is `fintoc-com/fintoc-rails`. The repository's `AG
 - Exclusion pattern for the signal commands: `-e '/spec/' -e '_spec\.rb$' -e '\.rbi$' -e '/db/' -e 'README'`.
 - PRs land as squash commits, one per PR. The PR number is in the commit subject, so `gh pr view <number>` gives description and discussion.
 
+## Legacy markers
+
+- Non-test files with `# typed: false` or `# typed: ignore`: `grep -rlE '^# typed: (false|ignore)' <engine>/app | xargs wc -l | sort -rn`. Admin files (`app/admin/`) often carry these. Raising them is low value unless the file also qualifies for another reason.
+- `rubocop:disable` blocks in `app/`.
+- Specs that use `allow_any_instance_of`.
+- Classes under `app/` without a mirrored spec in `spec/engines/<engine>/`.
+- Patterns `AGENTS.md` says not to copy: provider-prefixed columns in domain tables, hand-rolled state machines, constant hashes where a `T::Enum` belongs, memoization.
+
 ## Boundary checker
 
 - Packwerk: `make packwerk`. Recorded exceptions are in `engines/<name>/package_todo.yml`. Each entry is a rule-1 candidate.
