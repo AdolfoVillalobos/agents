@@ -4,7 +4,7 @@ Cada nombre público incluye el módulo que mantiene la skill. El nombre interno
 
 | Módulo | Skills | Criterio |
 | --- | --- | --- |
-| `personal` | 9 | Propias y adaptadas localmente |
+| `personal` | 10 | Propias y adaptadas localmente |
 | `matt-pocock` | 28 | Importadas de Matt Pocock |
 | `addyosmani` | 25 | Importadas de Addy Osmani |
 | `vercel` | 4 | Importadas de Vercel |
@@ -32,6 +32,7 @@ Estas tres usan instrucciones independientes del proveedor. `create-pr` incluye 
 | [personal:review-readiness](../modules/personal/skills/review-readiness/SKILL.md) | Evaluar intención, despliegue, compatibilidad y preparación para merge | Draft propio a partir del prompt C aportado por el usuario |
 | [personal:review-comments](../modules/personal/skills/review-comments/SKILL.md) | Convertir un review ya hecho en comentarios anclados, listos para pegar | Draft propio a partir del paquete `pr-review-assist` y el brief de comentarios aportados el 2026-10-13 |
 | [personal:reduce-pr-risk](../modules/personal/skills/reduce-pr-risk/SKILL.md) | Leer issue, descripción y diff de una PR, estimar qué ejes de riesgo la suben y proponer cómo bajarlo sin sobreingeniería | Draft propio; la referencia copia las rúbricas, señales y regla de combinación del motor de riesgo en `fintoc-com/dexter` (`0593a7e`) y conserva del hilo de Slack del 2026-10-31 solo la guía para dividir PRs; [casos de evaluación](../modules/personal/skills/reduce-pr-risk/evaluacion.md) |
+| [personal:find-refactors](../modules/personal/skills/find-refactors/SKILL.md) | Buscar refactors que abaraten un cambio real, con señales de historia (hotspots, acoplamiento, violaciones de frontera) y verificación adversarial | Draft propio, 2026-11-18, a partir del prompt de lotes de refactor de payments; [referencia de fintoc-rails](../modules/personal/skills/find-refactors/references/fintoc-rails.md) |
 
 `review-design`, `review-qa` y `review-readiness` son alternativas para pedir un pase específico. `code-review` conserva la revisión general. `review-comments` formatea los hallazgos que sobrevivieron. Si todavía no hay informe, corre antes el pase que corresponda. Comparten [protocolo y rúbrica](../modules/personal/skills/code-review/references/review-protocol.md), con una [referencia de pagos](../modules/personal/skills/code-review/references/payment-invariants.md) que se lee solo cuando aplica. [Procedencia, adaptaciones y casos de evaluación](review-skills.md). Validación estructural; evaluación con modelos pendiente.
 
